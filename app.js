@@ -122,10 +122,10 @@ function writeSnapshotToTable(snapshot) {
 	    var childData = childSnapshot.val();
 
 		console.log(childData);
-		var date = new Date(childSnapshot.key * 1);
+		const date = dateToStringWithoutSeconds(childSnapshot.key * 1);
 
 	    rowEl = tableEl.insertRow(0);
-	    rowEl.insertCell().textContent = date.toLocaleString();  
+	    rowEl.insertCell().textContent = date;  
 	    var eventType = Object.keys(childData)[0];
 	    if (eventType == 'hunger') {
 		    rowEl.insertCell().textContent = "Hunger level " + childData['hunger'];
