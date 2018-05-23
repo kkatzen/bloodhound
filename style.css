@@ -1,0 +1,76 @@
+body {
+  background-color: #A8CEC7;
+  color: black;
+}
+.vertical-container {
+  display: -webkit-flex;
+  display:         flex;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+}
+h1.vertical-container {
+  font-size: 275%;
+}
+
+button {
+  min-height: 37px;
+  min-width: 37px;
+}
+
+button:active {
+  background: red;
+}
+
+#hungerTable {
+  border-collapse: collapse;
+  margin-top: 50px;
+}
+
+#signout {
+  text-align: right;
+}
+
+#hunger, #medicine, #water, #feeling, #period {
+  background: white;
+  margin-top: 10px;
+  height: 110px;
+  padding: 5px;
+}
+
+#hunger img {
+  height: 100px;
+}
+
+#medicine img, #feeling img, #period img {
+  height: 100px;
+  float: right;
+}
+
+#water img {
+  height: 100px;
+}
+
+#food {
+  float: left;
+}
+
+#water button, #food {
+  background: transparent;
+  border: 0px;
+  padding: 0;
+}
+
+#medicine {
+  padding: 5px;
+}
+
+#medicine button {
+  margin-top: 4px;
+}
+
+#hungerTable td {
+  border: 1px solid grey;
+  padding: 0px 5px 0px 5px;
+}
