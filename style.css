@@ -43,7 +43,7 @@ button:active {
   height: 100px;
 }
 
-#medicine img, #feeling img, #period img {
+#medicine img, #feeling img, #period img, #photo {
   height: 100px;
   float: right;
 }
@@ -73,4 +73,8 @@ button:active {
 #hungerTable td {
   border: 1px solid grey;
   padding: 0px 5px 0px 5px;
+}
+
+.photoEvent {
+  width: 250px;
 }

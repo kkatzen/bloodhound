@@ -8,65 +8,65 @@
     <title>Bloodhound Tracker</title>
     <link rel="stylesheet" type="text/css" href="style.css?v=1.7" media="all">
     <link rel="stylesheet" type="text/css" href="reset.css?v=1.7" media="all">
-	<link rel="apple-touch-icon" href="img/apple-touch-icon.jpg"/>
+  <link rel="apple-touch-icon" href="img/apple-touch-icon.jpg"/>
   </head>
   <body>
-	<script src="https://www.gstatic.com/firebasejs/5.0.3/firebase.js"></script>
-	<script>
-	  // Initialize Firebase
-	  var config = {
-	    apiKey: "AIzaSyDg5iEsXNLO6v0YS2zq64z-6s67xyEH4MU",
-	    authDomain: "bloodhound-617f7.firebaseapp.com",
-	    databaseURL: "https://bloodhound-617f7.firebaseio.com",
-	    projectId: "bloodhound-617f7",
-	    storageBucket: "bloodhound-617f7.appspot.com",
-	    messagingSenderId: "745683878285"
-	  };
-	  firebase.initializeApp(config);
-	</script>
-	<script src="app.js"></script>
-	<script src="utils/dateToStringWithoutSeconds.js"></script>
-	<div id="signout">
-		<span id="username"></span>
-		<button onclick="signOut()">signOut</button>
-		<button onclick="logIn()">Login</button>
-	</div>
-	<div id="hunger">
-		<button id="food" onclick="writeFood()"><img src="img/hunger.png"></button>
-		<button onclick="writeHunger(0)">0</button>
-		<button onclick="writeHunger(1)">1</button>
-		<button onclick="writeHunger(2)">2</button>
-		<button onclick="writeHunger(3)">3</button>
-		<button onclick="writeHunger(4)">4</button>
-		<button onclick="writeHunger(5)">5</button>
-	</div>
-	<div id="feeling">
-		<img src="img/sick.png">
-		<button onclick="feelingBad(1)">1</button>
-		<button onclick="feelingBad(2)">2</button>
-		<button onclick="feelingBad(3)">3</button>
-		<button onclick="feelingBad(4)">4</button>
-		<button onclick="feelingBad(5)">5</button>
-	</div>
-	<div id="water">
-		<button onclick="writeWater()"><img src="img/water.png"></button>
-		<button onclick="writeSleep()"><img src="img/sleep.png"></button>
-	</div>
-	<div id="medicine">
-    	<img src="img/medicine.png">
-		<button onclick="writeMedicine('sumatriptan')">Sumatriptan</button>
-		<button onclick="writeMedicine('ibuprofen')">Ibuprofen</button>
-		<button onclick="writeMedicine('acetamenophin')">Acetamenophin</button>
-	</div>
-	<img id="myphoto">
-	<div id="hungerTable"></div>
-	<div id="period">
-		<img src="/img/period.png">
-		Period<br>
-		<input type="radio" name="period" value="3" onclick="periodLevel(3)"> Heavy<br>
-	    <input type="radio" name="period" value="2" onclick="periodLevel(2)"> Moderate<br>
-	    <input type="radio" name="period" value="1" onclick="periodLevel(1)"> Spotting<br>
-	</div>
-	<div id="periodTable"></div>
+  <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase.js"></script>
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyDg5iEsXNLO6v0YS2zq64z-6s67xyEH4MU",
+      authDomain: "bloodhound-617f7.firebaseapp.com",
+      databaseURL: "https://bloodhound-617f7.firebaseio.com",
+      projectId: "bloodhound-617f7",
+      storageBucket: "bloodhound-617f7.appspot.com",
+      messagingSenderId: "745683878285"
+    };
+    firebase.initializeApp(config);
+  </script>
+  <script src="app.js"></script>
+  <script src="utils/dateToStringWithoutSeconds.js"></script>
+  <script src="utils/blobToDataURL.js"></script>
+  <div id="signout">
+    <span id="username"></span>
+    <button onclick="signOut()">Sign out</button>
+    <button onclick="logIn()">Login</button>
+  </div>
+  <div id="hunger">
+    <button id="food" onclick="writeFood()"><img src="img/hunger.png"></button>
+    <button onclick="writeHunger(0)">0</button>
+    <button onclick="writeHunger(1)">1</button>
+    <button onclick="writeHunger(2)">2</button>
+    <button onclick="writeHunger(3)">3</button>
+    <button onclick="writeHunger(4)">4</button>
+    <button onclick="writeHunger(5)">5</button>
+  </div>
+  <div id="feeling">
+    <button id="photo" onclick="takePhoto()"><img src="img/sick.png"></button>
+    <button onclick="feelingBad(1)">1</button>
+    <button onclick="feelingBad(2)">2</button>
+    <button onclick="feelingBad(3)">3</button>
+    <button onclick="feelingBad(4)">4</button>
+    <button onclick="feelingBad(5)">5</button>
+  </div>
+  <div id="water">
+    <button onclick="writeWater()"><img src="img/water.png"></button>
+    <button onclick="writeSleep()"><img src="img/sleep.png"></button>
+  </div>
+  <div id="medicine">
+      <img src="img/medicine.png">
+    <button onclick="writeMedicine('sumatriptan')">Sumatriptan</button>
+    <button onclick="writeMedicine('ibuprofen')">Ibuprofen</button>
+    <button onclick="writeMedicine('acetamenophin')">Acetamenophin</button>
+  </div>
+  <div id="hungerTable"></div>
+  <div id="period">
+    <img src="/img/period.png">
+    Period<br>
+    <input type="radio" name="period" value="3" onclick="periodLevel(3)"> Heavy<br>
+      <input type="radio" name="period" value="2" onclick="periodLevel(2)"> Moderate<br>
+      <input type="radio" name="period" value="1" onclick="periodLevel(1)"> Spotting<br>
+  </div>
+  <div id="periodTable"></div>
   </body>
 </html>
