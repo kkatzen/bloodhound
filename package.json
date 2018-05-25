@@ -1,0 +1,19 @@
+{
+  "name": "bloodhound",
+  "version": "1.0.0",
+  "description": "An application for tracking nutrition and well-being over time.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kkatzen/bloodhound.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kkatzen/bloodhound/issues"
+  },
+  "homepage": "https://github.com/kkatzen/bloodhound#readme"
+}
