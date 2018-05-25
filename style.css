@@ -64,6 +64,7 @@ button:active {
   padding: 0px 5px 0px 5px;
   max-width: 220px;
   word-wrap: break-word;
+  padding: 5px;
 }
 
 .photoEvent {

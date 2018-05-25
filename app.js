@@ -67,7 +67,6 @@ function setUser(newUser) {
   myPeriodsRef.on('value', (snapshot) => writePeriodsToTable(snapshot));
 }
 
-
 function writeEvent(event) {
   // These should be written in batches
   var timestamp = new Date().getTime();
@@ -107,8 +106,6 @@ function writeFood() {
   var foodEvent = {}
   var description = prompt("Description");
   if (description != undefined) {foodEvent['description']  = description}
-  var photo = prompt("Photos link");
-  if (photo != undefined) {foodEvent['photo']  = photo}
   writeEvent({'food': foodEvent});
 }
 
@@ -160,7 +157,7 @@ function writeSnapshotToTable(snapshot) {
       firebase.database().ref('events/' + user.uid + "/" + childSnapshot.key).remove();
       // UI doesn't update when you update the last element
     });
-    rowEl.appendChild(btn);
+    rowEl.insertCell().appendChild(btn);
 
 
     var myNode = document.getElementById("hungerTable");
