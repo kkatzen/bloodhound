@@ -15,5 +15,11 @@
   "bugs": {
     "url": "https://github.com/kkatzen/bloodhound/issues"
   },
-  "homepage": "https://github.com/kkatzen/bloodhound#readme"
+  "homepage": "https://github.com/kkatzen/bloodhound#readme",
+  "devDependencies": {
+    "browserify": "^16.2.2"
+  },
+  "dependencies": {
+    "browserify": "^16.2.2"
+  }
 }
