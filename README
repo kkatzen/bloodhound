@@ -31,3 +31,13 @@ https://console.firebase.google.com/project/<projectID>/settings/general/
 
 "api key" is a jumble of characters that can be found at the link above.
 
+NPM
+===
+Don't forget to run npm install to update the project's dependencies.
+
+Testing and Deploying
+=====================
+Since this project includes a bundling step, use the bloodhound script to
+bundle and deploy in one step:
+  ./bloodhound serve
+  ./bloodhound deploy

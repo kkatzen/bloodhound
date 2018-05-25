@@ -1,3 +1,6 @@
+const dateToStringWithoutSeconds = require('./utils/dateToStringWithoutSeconds.js');
+const blobToDataURL = require('./utils/blobToDataURL.js')
+
 var provider = new firebase.auth.GoogleAuthProvider();
 
 var user = {};
@@ -125,7 +128,7 @@ function writeSnapshotToTable(snapshot) {
     const date = dateToStringWithoutSeconds(childSnapshot.key * 1);
 
     rowEl = tableEl.insertRow(0);
-    rowEl.insertCell().textContent = date;  
+    rowEl.insertCell().textContent = date;
     var eventType = Object.keys(childData)[0];
     if (eventType == 'hunger') {
       rowEl.insertCell().textContent = "Hunger level " + childData['hunger'];
@@ -168,8 +171,8 @@ function writeSnapshotToTable(snapshot) {
      while (myNode.firstChild) {
       myNode.removeChild(myNode.firstChild);
     }
-    var header = document.createTextNode("Events for " + user.email);   
-    myNode.appendChild(header); 
+    var header = document.createTextNode("Events for " + user.email);
+    myNode.appendChild(header);
     myNode.appendChild(tableEl);
     });
 }
@@ -189,8 +192,8 @@ function writePeriodsToTable(snapshot) {
         var date = new Date(daySnapshot.key * 1);
 
         rowEl = tableEl.insertRow(0);
-        rowEl.insertCell().textContent = 
-          yearSnapshot.key + "/" + monthSnapshot.key + "/" + daySnapshot.key;  
+        rowEl.insertCell().textContent =
+          yearSnapshot.key + "/" + monthSnapshot.key + "/" + daySnapshot.key;
         var eventType = Object.keys(childData)[0];
         if (childData['level'] == '1') {
           rowEl.insertCell().textContent = "Spotting";
@@ -204,12 +207,12 @@ function writePeriodsToTable(snapshot) {
          while (myNode.firstChild) {
           myNode.removeChild(myNode.firstChild);
         }
-        var header = document.createTextNode("Periods for " + user.email);    
-        myNode.appendChild(header); 
+        var header = document.createTextNode("Periods for " + user.email);
+        myNode.appendChild(header);
         myNode.appendChild(tableEl);
       });
     });
-  }); 
+  });
 }
 
 function gotMedia(mediaStream) {
@@ -224,7 +227,7 @@ function gotMedia(mediaStream) {
         dataURL,
       });
     });
-  })  
+  })
   .catch(error => console.error('takePhoto() error:', error));
 }
 
@@ -232,7 +235,7 @@ function takePhoto() {
   navigator.mediaDevices.getUserMedia({video: true})
     .then(gotMedia)
     .catch(error => console.error('getUserMedia() error:', error));
-} 
+}
 
 function periodLevel(level) {
   console.log('WRITING PERIOD');
@@ -244,3 +247,21 @@ function periodLevel(level) {
   var obj = {'level': level}
   firebase.database().ref('periods/' + user.uid + '/' + datestring).set(obj);
 }
+
+/**
+ * We wouldn't need to do this if we were building all our HTML here. Since
+ * we're not using a framework yet, we need to expose the actions that the
+ * HTML needs to refer to. See api.js for more details.
+ */
+Object.assign(api.actions, {
+  feelingBad,
+  logIn,
+  periodLevel,
+  signOut,
+  takePhoto,
+  writeFood,
+  writeHunger,
+  writeMedicine,
+  writeSleep,
+  writeWater,
+});

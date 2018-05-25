@@ -16,48 +16,49 @@
   <script>
     firebase.initializeApp(authConfig);
   </script>
-  <script src="app.js"></script>
-  <script src="utils/dateToStringWithoutSeconds.js"></script>
-  <script src="utils/blobToDataURL.js"></script>
+  <script src="api.js"></script>
+  <script src="bundle.js"></script>
   <div id="signout">
     <span id="username"></span>
-    <button onclick="signOut()">Sign out</button>
-    <button onclick="logIn()">Login</button>
+    <button onclick="api.actions.signOut()">Sign out</button>
+    <button onclick="api.actions.logIn()">Login</button>
   </div>
   <div id="hunger">
-    <button id="food" onclick="writeFood()"><img src="img/hunger.png"></button>
-    <button onclick="writeHunger(0)">0</button>
-    <button onclick="writeHunger(1)">1</button>
-    <button onclick="writeHunger(2)">2</button>
-    <button onclick="writeHunger(3)">3</button>
-    <button onclick="writeHunger(4)">4</button>
-    <button onclick="writeHunger(5)">5</button>
+    <button id="food" onclick="api.actions.writeFood()"><img src="img/hunger.png"></button>
+    <button onclick="api.actions.writeHunger(0)">0</button>
+    <button onclick="api.actions.writeHunger(1)">1</button>
+    <button onclick="api.actions.writeHunger(2)">2</button>
+    <button onclick="api.actions.writeHunger(3)">3</button>
+    <button onclick="api.actions.writeHunger(4)">4</button>
+    <button onclick="api.actions.writeHunger(5)">5</button>
   </div>
   <div id="feeling">
-    <button id="photo" onclick="takePhoto()"><img src="img/sick.png"></button>
-    <button onclick="feelingBad(1)">1</button>
-    <button onclick="feelingBad(2)">2</button>
-    <button onclick="feelingBad(3)">3</button>
-    <button onclick="feelingBad(4)">4</button>
-    <button onclick="feelingBad(5)">5</button>
+    <button id="photo" onclick="api.actions.takePhoto()">
+      <img src="img/sick.png">
+    </button>
+    <button onclick="api.actions.feelingBad(1)">1</button>
+    <button onclick="api.actions.feelingBad(2)">2</button>
+    <button onclick="api.actions.feelingBad(3)">3</button>
+    <button onclick="api.actions.feelingBad(4)">4</button>
+    <button onclick="api.actions.feelingBad(5)">5</button>
   </div>
   <div id="water">
-    <button onclick="writeWater()"><img src="img/water.png"></button>
-    <button onclick="writeSleep()"><img src="img/sleep.png"></button>
+    <button onclick="api.actions.writeWater()"><img src="img/water.png"></button>
+    <button onclick="api.actions.writeSleep()"><img src="img/sleep.png"></button>
   </div>
   <div id="medicine">
       <img src="img/medicine.png">
-    <button onclick="writeMedicine('sumatriptan')">Sumatriptan</button>
-    <button onclick="writeMedicine('ibuprofen')">Ibuprofen</button>
-    <button onclick="writeMedicine('acetamenophin')">Acetamenophin</button>
+    <button onclick="api.actions.writeMedicine('sumatriptan')">Sumatriptan</button>
+    <button onclick="api.actions.writeMedicine('ibuprofen')">Ibuprofen</button>
+    <button onclick="api.actions.writeMedicine('acetamenophin')">Acetamenophin</button>
   </div>
   <div id="hungerTable"></div>
   <div id="period">
     <img src="/img/period.png">
     Period<br>
-    <input type="radio" name="period" value="3" onclick="periodLevel(3)"> Heavy<br>
-      <input type="radio" name="period" value="2" onclick="periodLevel(2)"> Moderate<br>
-      <input type="radio" name="period" value="1" onclick="periodLevel(1)"> Spotting<br>
+    <input type="radio" name="period" value="3" onclick="api.actions.periodLevel(3)"> Heavy<br>
+      <input type="radio" name="period" value="2" onclick="api.actions.periodLevel(2)"> Moderate<br>
+      <input type="radio" name="period" value="1" onclick="api.actions.periodLevel(1)"> Spotting<br>
   </div>
   <div id="periodTable"></div>
   </body>

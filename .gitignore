@@ -2,6 +2,7 @@
 authConfig.js
 .firebaserc
 firebase.json
+bundle.js
 
 ###############################################################################
 # Node-related

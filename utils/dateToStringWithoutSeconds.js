@@ -7,3 +7,5 @@ function dateToStringWithoutSeconds(/* int */ timestamp) /* string */ {
   return string.substring(0, indexOfSecondColon) +
     string.substring(indexOfSecondColon + 3);
 }
+
+module.exports = dateToStringWithoutSeconds;
