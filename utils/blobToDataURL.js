@@ -3,3 +3,5 @@ function blobToDataURL(blob, callback) {
   a.onload = function(e) {callback(e.target.result);}
   a.readAsDataURL(blob);
 }
+
+module.exports = blobToDataURL;

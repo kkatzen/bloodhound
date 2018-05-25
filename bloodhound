@@ -1,0 +1,30 @@
+#!/bin/bash
+
+print_usage() {
+	echo "Usage:";
+    echo "./bloodhound serve - to test changes locally";
+    echo "./bloodhound deploy - to deploy";
+}
+
+if [ "$#" -ne 1 ]; then
+    print_usage
+    exit -1
+fi
+
+case "$1" in
+	"serve")
+		browserify app.js -o bundle.js
+		firebase serve
+		exit 0
+		;;
+	"deploy")
+		browserify app.js -o bundle.js
+		firebase deploy
+		exit 0
+		;;
+	*)
+		print_usage
+		exit -1
+		;;
+esac
+
