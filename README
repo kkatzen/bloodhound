@@ -1,0 +1,33 @@
+
+Install node
+============
+- Use the max node version Firebase will allow.  At the time of writing,
+  the command to run is "sudo n 6.11.5".
+
+Connecting to a new Firebase project
+====================================
+- In the terminal, go to the root of the project and run "firebase init".
+- Choose "Hosting".
+- When asked what the public directory should be, choose ".".
+- When asked whether this should be a single-page website, say yes.
+- When asked whether index.js should be overwritten, say no.
+
+Setup firebase authConfig
+=========================
+- In the root of the project, create authConfig.js.
+- Populate it as follows:
+
+const authConfig = {
+  apiKey: <api key>,
+  authDomain: "<projectID>.firebaseapp.com",
+  databaseURL: "https://<projectID>.firebaseio.com",
+  projectId: "<projectID>",
+  storageBucket: "<projectID>.appspot.com",
+  messagingSenderId: "745683878285"
+};
+
+This is a little circular, but you can find your project ID here:
+https://console.firebase.google.com/project/<projectID>/settings/general/
+
+"api key" is a jumble of characters that can be found at the link above.
+

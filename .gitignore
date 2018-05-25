@@ -1,1 +1,4 @@
 */.DS_Store
+authConfig.js
+.firebaserc
+firebase.json

@@ -12,17 +12,9 @@
   </head>
   <body>
   <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase.js"></script>
+  <script src="authConfig.js"></script>
   <script>
-    // Initialize Firebase
-    var config = {
-      apiKey: "AIzaSyDg5iEsXNLO6v0YS2zq64z-6s67xyEH4MU",
-      authDomain: "bloodhound-617f7.firebaseapp.com",
-      databaseURL: "https://bloodhound-617f7.firebaseio.com",
-      projectId: "bloodhound-617f7",
-      storageBucket: "bloodhound-617f7.appspot.com",
-      messagingSenderId: "745683878285"
-    };
-    firebase.initializeApp(config);
+    firebase.initializeApp(authConfig);
   </script>
   <script src="app.js"></script>
   <script src="utils/dateToStringWithoutSeconds.js"></script>
