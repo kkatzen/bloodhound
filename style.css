@@ -2,17 +2,6 @@ body {
   background-color: #A8CEC7;
   color: black;
 }
-.vertical-container {
-  display: -webkit-flex;
-  display:         flex;
-  -webkit-align-items: center;
-          align-items: center;
-  -webkit-justify-content: center;
-          justify-content: center;
-}
-h1.vertical-container {
-  font-size: 275%;
-}
 
 button {
   min-height: 37px;
@@ -24,6 +13,7 @@ button:active {
 }
 
 #hungerTable {
+  width: 100%;
   border-collapse: collapse;
   margin-top: 50px;
 }
@@ -32,31 +22,30 @@ button:active {
   text-align: right;
 }
 
-#hunger, #medicine, #water, #feeling, #period {
+.wide-div {
   background: white;
   margin-top: 10px;
   height: 110px;
   padding: 5px;
 }
 
-#hunger img {
+.wide-div img {
   height: 100px;
 }
 
-#medicine img, #feeling img, #period img, #photo {
-  height: 100px;
+#photo {
+  text-align: center
+} 
+
+#medicine img, #feeling img, #period img {
   float: right;
-}
-
-#water img {
-  height: 100px;
 }
 
 #food {
   float: left;
 }
 
-#water button, #food {
+#water button, #food, #photo button {
   background: transparent;
   border: 0px;
   padding: 0;
@@ -73,8 +62,11 @@ button:active {
 #hungerTable td {
   border: 1px solid grey;
   padding: 0px 5px 0px 5px;
+  max-width: 220px;
+  word-wrap: break-word;
+  padding: 5px;
 }
 
 .photoEvent {
-  width: 250px;
+  width: 200px;
 }

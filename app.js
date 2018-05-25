@@ -70,7 +70,6 @@ function setUser(newUser) {
   myPeriodsRef.on('value', (snapshot) => writePeriodsToTable(snapshot));
 }
 
-
 function writeEvent(event) {
   // These should be written in batches
   var timestamp = new Date().getTime();
@@ -110,8 +109,6 @@ function writeFood() {
   var foodEvent = {}
   var description = prompt("Description");
   if (description != undefined) {foodEvent['description']  = description}
-  var photo = prompt("Photos link");
-  if (photo != undefined) {foodEvent['photo']  = photo}
   writeEvent({'food': foodEvent});
 }
 
@@ -124,7 +121,6 @@ function writeSnapshotToTable(snapshot) {
 
     var childData = childSnapshot.val();
 
-    console.log(childData);
     const date = dateToStringWithoutSeconds(childSnapshot.key * 1);
 
     rowEl = tableEl.insertRow(0);
@@ -164,7 +160,7 @@ function writeSnapshotToTable(snapshot) {
       firebase.database().ref('events/' + user.uid + "/" + childSnapshot.key).remove();
       // UI doesn't update when you update the last element
     });
-    rowEl.appendChild(btn);
+    rowEl.insertCell().appendChild(btn);
 
 
     var myNode = document.getElementById("hungerTable");
@@ -232,7 +228,7 @@ function gotMedia(mediaStream) {
 }
 
 function takePhoto() {
-  navigator.mediaDevices.getUserMedia({video: true})
+  navigator.mediaDevices.getUserMedia({video: {facingMode: "environment"}})
     .then(gotMedia)
     .catch(error => console.error('getUserMedia() error:', error));
 }
