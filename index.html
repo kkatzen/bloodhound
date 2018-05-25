@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Bloodhound Tracker</title>
-    <link rel="stylesheet" type="text/css" href="style.css?v=1.7" media="all">
+    <link rel="stylesheet" type="text/css" href="style.css?v=1.9" media="all">
     <link rel="stylesheet" type="text/css" href="reset.css?v=1.7" media="all">
   <link rel="apple-touch-icon" href="img/apple-touch-icon.jpg"/>
   </head>
@@ -24,7 +24,7 @@
     <button onclick="signOut()">Sign out</button>
     <button onclick="logIn()">Login</button>
   </div>
-  <div id="hunger">
+  <div id="hunger" class="wide-div">
     <button id="food" onclick="writeFood()"><img src="img/hunger.png"></button>
     <button onclick="writeHunger(0)">0</button>
     <button onclick="writeHunger(1)">1</button>
@@ -33,31 +33,34 @@
     <button onclick="writeHunger(4)">4</button>
     <button onclick="writeHunger(5)">5</button>
   </div>
-  <div id="feeling">
-    <button id="photo" onclick="takePhoto()"><img src="img/sick.png"></button>
+  <div id="photo" class="wide-div">
+    <button onclick="takePhoto()"><img src="img/camera.jpg"></button>
+  </div>
+  <div id="feeling" class="wide-div">
+    <img src="img/sick.png">
     <button onclick="feelingBad(1)">1</button>
     <button onclick="feelingBad(2)">2</button>
     <button onclick="feelingBad(3)">3</button>
     <button onclick="feelingBad(4)">4</button>
     <button onclick="feelingBad(5)">5</button>
   </div>
-  <div id="water">
+  <div id="water" class="wide-div">
     <button onclick="writeWater()"><img src="img/water.png"></button>
     <button onclick="writeSleep()"><img src="img/sleep.png"></button>
   </div>
-  <div id="medicine">
+  <div id="medicine" class="wide-div">
       <img src="img/medicine.png">
     <button onclick="writeMedicine('sumatriptan')">Sumatriptan</button>
     <button onclick="writeMedicine('ibuprofen')">Ibuprofen</button>
     <button onclick="writeMedicine('acetamenophin')">Acetamenophin</button>
   </div>
   <div id="hungerTable"></div>
-  <div id="period">
+  <div id="period" class="wide-div">
     <img src="/img/period.png">
     Period<br>
     <input type="radio" name="period" value="3" onclick="periodLevel(3)"> Heavy<br>
-      <input type="radio" name="period" value="2" onclick="periodLevel(2)"> Moderate<br>
-      <input type="radio" name="period" value="1" onclick="periodLevel(1)"> Spotting<br>
+    <input type="radio" name="period" value="2" onclick="periodLevel(2)"> Moderate<br>
+    <input type="radio" name="period" value="1" onclick="periodLevel(1)"> Spotting<br>
   </div>
   <div id="periodTable"></div>
   </body>

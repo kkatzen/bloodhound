@@ -121,7 +121,6 @@ function writeSnapshotToTable(snapshot) {
 
     var childData = childSnapshot.val();
 
-    console.log(childData);
     const date = dateToStringWithoutSeconds(childSnapshot.key * 1);
 
     rowEl = tableEl.insertRow(0);
@@ -229,7 +228,7 @@ function gotMedia(mediaStream) {
 }
 
 function takePhoto() {
-  navigator.mediaDevices.getUserMedia({video: true})
+  navigator.mediaDevices.getUserMedia({video: {facingMode: "environment"}})
     .then(gotMedia)
     .catch(error => console.error('getUserMedia() error:', error));
 } 
