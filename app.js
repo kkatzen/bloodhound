@@ -152,7 +152,7 @@ function writeSnapshotToTable(snapshot) {
     } else if (childData.type =="image"){
       const img = document.createElement('img');
       img.src = childData['dataURL'];
-      img.className = 'photoEvent';
+      img.id = 'photoEvent';
       rowEl.insertCell().appendChild(img);
     }
 
@@ -221,9 +221,17 @@ function gotMedia(mediaStream) {
         type: 'image',
         dataURL,
       });
+      setLastPhoto(dataURL);
     });
   })
   .catch(error => console.error('takePhoto() error:', error));
+}
+
+function setLastPhoto(dataURL /* string */) /* void */ {
+  const img = document.createElement('img');
+  img.src = dataURL;
+  img.id = 'photoPreview';
+  DOMUtils.setContentsByID('lastPhotoPreviewContainer', [img]);
 }
 
 function takePhoto() {
