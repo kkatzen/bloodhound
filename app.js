@@ -1,5 +1,8 @@
+
+const DOMUtils = require('./utils/DOMUtils.js');
+
+const blobToDataURL = require('./utils/blobToDataURL.js');
 const dateToStringWithoutSeconds = require('./utils/dateToStringWithoutSeconds.js');
-const blobToDataURL = require('./utils/blobToDataURL.js')
 
 var provider = new firebase.auth.GoogleAuthProvider();
 
@@ -163,13 +166,9 @@ function writeSnapshotToTable(snapshot) {
     rowEl.insertCell().appendChild(btn);
 
 
-    var myNode = document.getElementById("hungerTable");
-     while (myNode.firstChild) {
-      myNode.removeChild(myNode.firstChild);
-    }
-    var header = document.createTextNode("Events for " + user.email);
-    myNode.appendChild(header);
-    myNode.appendChild(tableEl);
+    const header = document.createTextNode("Events for " + user.email);
+    console.log({header});
+    DOMUtils.setContentsByID("hungerTable", [header, tableEl]);
     });
 }
 
