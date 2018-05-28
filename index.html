@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Bloodhound Tracker</title>
-    <link rel="stylesheet" type="text/css" href="style.css?v=1.9.1" media="all">
+    <link rel="stylesheet" type="text/css" href="style.css?v=1.9.16" media="all">
     <link rel="stylesheet" type="text/css" href="reset.css?v=1.7" media="all">
   <link rel="apple-touch-icon" href="img/apple-touch-icon.jpg"/>
   </head>
@@ -24,7 +24,7 @@
     <button onclick="api.actions.logIn()">Login</button>
   </div>
   <div id="hunger" class="wide-div">
-    <button id="food" onclick="api.actions.writeFood()"><img src="img/hunger.png"></button>
+    <button id="food" onclick="api.actions.writeFood()"><img src="img/hunger.png" class="fullRowHeight"></button>
     <button onclick="api.actions.writeHunger(0)">0</button>
     <button onclick="api.actions.writeHunger(1)">1</button>
     <button onclick="api.actions.writeHunger(2)">2</button>
@@ -33,10 +33,13 @@
     <button onclick="api.actions.writeHunger(5)">5</button>
   </div>
   <div id="photo" class="wide-div">
-    <button onclick="api.actions.takePhoto()"><img src="img/camera.jpg"></button>
+    <button class="takePhotoButton" onclick="api.actions.takePhoto()">
+      <img src="img/camera.jpg" class="fullRowHeight">
+      <div id="lastPhotoPreviewContainer"></div>
+    </button>
   </div>
   <div id="feeling" class="wide-div">
-    <img src="img/sick.png">
+    <img src="img/sick.png" class="fullRowHeight">
     <button onclick="api.actions.feelingBad(1)">1</button>
     <button onclick="api.actions.feelingBad(2)">2</button>
     <button onclick="api.actions.feelingBad(3)">3</button>
@@ -44,18 +47,18 @@
     <button onclick="api.actions.feelingBad(5)">5</button>
   </div>
   <div id="water" class="wide-div">
-    <button onclick="api.actions.writeWater()"><img src="img/water.png"></button>
-    <button onclick="api.actions.writeSleep()"><img src="img/sleep.png"></button>
+    <button onclick="api.actions.writeWater()"><img src="img/water.png" class="fullRowHeight"></button>
+    <button onclick="api.actions.writeSleep()"><img src="img/sleep.png" class="fullRowHeight"></button>
   </div>
   <div id="medicine" class="wide-div">
-      <img src="img/medicine.png">
+      <img src="img/medicine.png" class="fullRowHeight">
     <button onclick="api.actions.writeMedicine('sumatriptan')">Sumatriptan</button>
     <button onclick="api.actions.writeMedicine('ibuprofen')">Ibuprofen</button>
     <button onclick="api.actions.writeMedicine('acetamenophin')">Acetamenophin</button>
   </div>
   <div id="hungerTable"></div>
   <div id="period" class="wide-div">
-    <img src="/img/period.png">
+    <img src="/img/period.png" class="fullRowHeight">
     Period<br>
     <input type="radio" name="period" value="3" onclick="api.actions.periodLevel(3)"> Heavy<br>
     <input type="radio" name="period" value="2" onclick="api.actions.periodLevel(2)"> Moderate<br>

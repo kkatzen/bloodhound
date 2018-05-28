@@ -29,13 +29,11 @@ button:active {
   padding: 5px;
 }
 
-.wide-div img {
+.fullRowHeight {
   height: 100px;
 }
 
-#photo {
-  text-align: center
-} 
+#photo {}
 
 #medicine img, #feeling img, #period img {
   float: right;
@@ -67,6 +65,27 @@ button:active {
   padding: 5px;
 }
 
-.photoEvent {
+#photoEvent {
   width: 200px;
+}
+
+.takePhotoButton {
+  display: table;
+  position: relative;
+  margin: 0 auto;
+}
+
+#photoPreview {
+  height: 50px;
+}
+
+#lastPhotoPreviewContainer {
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
+}
+
+#takePhotoContainer {
+  left: 10px;
+  position: absolute;
 }
