@@ -1,12 +1,10 @@
 
 const DOMUtils = require('./utils/DOMUtils.js');
 
-const blobToDataURL = require('./utils/blobToDataURL.js');
+const buildSession = require('./buildSession.js');
 const dateToStringWithoutSeconds = require('./utils/dateToStringWithoutSeconds.js');
 
 var provider = new firebase.auth.GoogleAuthProvider();
-
-var user = {};
 
 provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
 firebase.auth().languageCode = 'ens';
@@ -30,7 +28,7 @@ firebase.auth().onAuthStateChanged(function(loggedInUser) {
   console.log("NEED TO LOG IN");
   } else {
     setUser(loggedInUser)
-   console.log("ALREADY LOGGED IN AS " + user.email);
+   console.log("ALREADY LOGGED IN AS " + api.session.user.email);
    }
 });
 
@@ -65,24 +63,17 @@ function signOut() {
 }
 
 function setUser(newUser) {
-  user = newUser;
-  document.getElementById("username").innerHTML = user.email;
-  var myEventsRef = firebase.database().ref('events/' + user.uid + "");
+  api.session = buildSession(newUser);
+  document.getElementById("username").innerHTML = newUser.email;
+  var myEventsRef = firebase.database().ref('events/' + newUser.uid + "");
   myEventsRef.on('value', (snapshot) => writeSnapshotToTable(snapshot));
-  var myPeriodsRef = firebase.database().ref('periods/' + user.uid + "");
+  var myPeriodsRef = firebase.database().ref('periods/' + newUser.uid + "");
   myPeriodsRef.on('value', (snapshot) => writePeriodsToTable(snapshot));
 }
 
-function writeEvent(event) {
-  // These should be written in batches
-  var timestamp = new Date().getTime();
-  console.log("WRITING EVENT FOR: "  + user.email);
-  firebase.database().ref('events/' + user.uid + '/' + timestamp).set(event);
-  console.log("EVENTS UPDATED.");
-}
 function writeHunger(level) {
   console.log("WRITING HUNGER");
-  writeEvent({'hunger': level});
+  api.session.storeAccessor.writeEvent({'hunger': level});
 }
 
 function feelingBad(level) {
@@ -90,29 +81,29 @@ function feelingBad(level) {
   var feelingEvent = {'level': level};
   var description = prompt("how do you feel");
   if (description != undefined) {feelingEvent['description']  = description}
-  writeEvent({'feeling': feelingEvent});
+  api.session.storeAccessor.writeEvent({'feeling': feelingEvent});
 }
 
 function writeMedicine(name) {
   console.log("WRITING MEDICINE");
-  writeEvent({'medicine': name});
+  api.session.storeAccessor.writeEvent({'medicine': name});
 }
 
 function writeWater(level) {
   console.log("WRITING WATER");
-  writeEvent({'water': "sips sip"});
+  api.session.storeAccessor.writeEvent({'water': "sips sip"});
 }
 
 function writeSleep(level) {
   console.log("WRITING SLEEP");
-  writeEvent({'sleep': "zzz"});
+  api.session.storeAccessor.writeEvent({'sleep': "zzz"});
 }
 
 function writeFood() {
   var foodEvent = {}
   var description = prompt("Description");
   if (description != undefined) {foodEvent['description']  = description}
-  writeEvent({'food': foodEvent});
+  api.session.storeAccessor.writeEvent({'food': foodEvent});
 }
 
 function writeSnapshotToTable(snapshot) {
@@ -160,16 +151,16 @@ function writeSnapshotToTable(snapshot) {
     btn.type = "button";
     btn.value = 'x';
     btn.onclick = (function(event) {
-      firebase.database().ref('events/' + user.uid + "/" + childSnapshot.key).remove();
+      firebase.database().ref('events/' + api.session.user.uid + "/" + childSnapshot.key).remove();
       // UI doesn't update when you update the last element
     });
     rowEl.insertCell().appendChild(btn);
 
 
-    const header = document.createTextNode("Events for " + user.email);
+    const header = document.createTextNode("Events for " + api.session.user.email);
     console.log({header});
     DOMUtils.setContentsByID("hungerTable", [header, tableEl]);
-    });
+  });
 }
 
 function writePeriodsToTable(snapshot) {
@@ -202,42 +193,12 @@ function writePeriodsToTable(snapshot) {
          while (myNode.firstChild) {
           myNode.removeChild(myNode.firstChild);
         }
-        var header = document.createTextNode("Periods for " + user.email);
+        var header = document.createTextNode("Periods for " + api.session.user.email);
         myNode.appendChild(header);
         myNode.appendChild(tableEl);
       });
     });
   });
-}
-
-function gotMedia(mediaStream) {
-  const mediaStreamTrack = mediaStream.getVideoTracks()[0];
-  const imageCapture = new ImageCapture(mediaStreamTrack);
-  console.log(imageCapture);
-
-  imageCapture.takePhoto().then(blob => {
-    blobToDataURL(blob, dataURL => {
-      writeEvent({
-        type: 'image',
-        dataURL,
-      });
-      setLastPhoto(dataURL);
-    });
-  })
-  .catch(error => console.error('takePhoto() error:', error));
-}
-
-function setLastPhoto(dataURL /* string */) /* void */ {
-  const img = document.createElement('img');
-  img.src = dataURL;
-  img.id = 'photoPreview';
-  DOMUtils.setContentsByID('lastPhotoPreviewContainer', [img]);
-}
-
-function takePhoto() {
-  navigator.mediaDevices.getUserMedia({video: {facingMode: "environment"}})
-    .then(gotMedia)
-    .catch(error => console.error('getUserMedia() error:', error));
 }
 
 function periodLevel(level) {
@@ -248,7 +209,7 @@ function periodLevel(level) {
   var datestring =timestamp.getFullYear() + '/' + month + '/' + day;
   console.log(datestring);
   var obj = {'level': level}
-  firebase.database().ref('periods/' + user.uid + '/' + datestring).set(obj);
+  firebase.database().ref('periods/' + api.session.user.uid + '/' + datestring).set(obj);
 }
 
 /**
@@ -261,7 +222,7 @@ Object.assign(api.actions, {
   logIn,
   periodLevel,
   signOut,
-  takePhoto,
+  takePhoto: require('./actions/takePhoto.js'),
   writeFood,
   writeHunger,
   writeMedicine,
