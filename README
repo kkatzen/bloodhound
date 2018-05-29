@@ -11,6 +11,7 @@ Connecting to a new Firebase project
 - When asked what the public directory should be, choose ".".
 - When asked whether this should be a single-page website, say yes.
 - When asked whether index.js should be overwritten, say no.
+- Run 'firebase init functions'.
 
 Setup firebase authConfig
 =========================

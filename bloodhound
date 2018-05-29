@@ -2,7 +2,7 @@
 
 print_usage() {
 	echo "Usage:";
-	echo "./bloodhound setup - to test changes locally";
+	echo "./bloodhound setup - setup additional dependencies";
     echo "./bloodhound serve - to test changes locally";
     echo "./bloodhound deploy - to deploy";
 }
@@ -30,7 +30,7 @@ case "$1" in
 		firebase serve
 		exit 0
 		;;
-	"deploy")
+	"deploy"|"derploy")
 		browserify app.js -o bundle.js
 		firebase deploy
 		exit 0

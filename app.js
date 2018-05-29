@@ -65,7 +65,7 @@ function signOut() {
 function setUser(newUser) {
   api.session = buildSession(newUser);
   document.getElementById("username").innerHTML = newUser.email;
-  var myEventsRef = firebase.database().ref('events/' + newUser.uid + "");
+  var myEventsRef = firebase.database().ref('events/' + newUser.uid + "").limitToLast(5);
   myEventsRef.on('value', (snapshot) => writeSnapshotToTable(snapshot));
   var myPeriodsRef = firebase.database().ref('periods/' + newUser.uid + "");
   myPeriodsRef.on('value', (snapshot) => writePeriodsToTable(snapshot));

@@ -20,6 +20,8 @@
     "browserify": "^16.2.2"
   },
   "dependencies": {
+    "firebase-admin": "^5.12.1",
+    "firebase-functions": "^1.0.3",
     "invariant": "^2.2.4",
     "nullthrows": "^1.0.1"
   }
