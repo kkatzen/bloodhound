@@ -3,6 +3,8 @@ authConfig.js
 .firebaserc
 firebase.json
 bundle.js
+.DS_Store
+package-lock.json
 
 ###############################################################################
 # Node-related
