@@ -20,7 +20,6 @@
     "browserify": "^16.2.2"
   },
   "dependencies": {
-    "browserify": "^16.2.2",
     "invariant": "^2.2.4",
     "nullthrows": "^1.0.1"
   }

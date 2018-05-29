@@ -2,6 +2,7 @@
 
 print_usage() {
 	echo "Usage:";
+	echo "./bloodhound setup - to test changes locally";
     echo "./bloodhound serve - to test changes locally";
     echo "./bloodhound deploy - to deploy";
 }
@@ -11,7 +12,19 @@ if [ "$#" -ne 1 ]; then
     exit -1
 fi
 
+if [ "$1" == "setup" ]; then
+    npm install browserify -g
+    exit -1
+elif [ -z "`which browserify`" ]; then
+	echo "Run with 'setup' option to install additional dependencies."
+	exit -1
+fi
+
 case "$1" in
+	"setup")
+		npm install browserify -g
+		exit 0
+		;;
 	"serve")
 		browserify app.js -o bundle.js
 		firebase serve
