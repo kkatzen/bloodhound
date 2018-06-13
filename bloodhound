@@ -26,7 +26,7 @@ case "$1" in
 		exit 0
 		;;
 	"serve")
-		browserify app.js -o bundle.js
+		watchify app.js -o bundle.js &
 		firebase serve
 		exit 0
 		;;

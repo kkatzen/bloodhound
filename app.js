@@ -63,10 +63,11 @@ function signOut() {
 }
 
 function setUser(newUser) {
-  api.session = buildSession(newUser);
+  api.session = buildSession(newUser, 0);
   document.getElementById("username").innerHTML = newUser.email;
   var myEventsRef = firebase.database().ref('events/' + newUser.uid + "").limitToLast(5);
-  myEventsRef.on('value', (snapshot) => writeSnapshotToTable(snapshot));
+  myEventsRef.on('value', (snapshot) => processSnapshot(snapshot));
+
   var myPeriodsRef = firebase.database().ref('periods/' + newUser.uid + "");
   myPeriodsRef.on('value', (snapshot) => writePeriodsToTable(snapshot));
 }
@@ -106,65 +107,7 @@ function writeFood() {
   api.session.storeAccessor.writeEvent({'food': foodEvent});
 }
 
-function writeSnapshotToTable(snapshot) {
-  console.log("attempting read");
-
-  var tableEl = document.createElement("table");  //Creating the <table> element
-
-  snapshot.forEach(function(childSnapshot) {
-
-    var childData = childSnapshot.val();
-
-    const date = dateToStringWithoutSeconds(childSnapshot.key * 1);
-
-    rowEl = tableEl.insertRow(0);
-    rowEl.insertCell().textContent = date;
-    var eventType = Object.keys(childData)[0];
-    if (eventType == 'hunger') {
-      rowEl.insertCell().textContent = "Hunger level " + childData['hunger'];
-    } else if (eventType == 'water') {
-      rowEl.insertCell().textContent = "Drank a cup of water";
-    } else if (eventType == 'medicine') {
-      rowEl.insertCell().textContent = "Took " + childData['medicine'];
-    } else if (eventType == 'sleep') {
-      rowEl.insertCell().textContent = "Went to bed / Woke up";
-    } else if (eventType == 'food') {
-      var text = "Ate " + childData['food']['description'];
-      if (childData['food']['photo']) {
-        text += " " + childData['food']['photo'];
-      }
-      rowEl.insertCell().textContent = text;
-    } else if (eventType == 'feeling') {
-      var text = "Feeling bad " + childData['feeling']['level'];
-      if (childData['feeling']['description']) {
-        text += " \"" + childData['feeling']['description'] + "\"";
-      }
-      rowEl.insertCell().textContent =  text;
-    } else if (childData.type =="image"){
-      const img = document.createElement('img');
-      img.src = childData['dataURL'];
-      img.id = 'photoEvent';
-      rowEl.insertCell().appendChild(img);
-    }
-
-    var btn = document.createElement('input');
-    btn.type = "button";
-    btn.value = 'x';
-    btn.onclick = (function(event) {
-      firebase.database().ref('events/' + api.session.user.uid + "/" + childSnapshot.key).remove();
-      // UI doesn't update when you update the last element
-    });
-    rowEl.insertCell().appendChild(btn);
-
-
-    const header = document.createTextNode("Events for " + api.session.user.email);
-    console.log({header});
-    DOMUtils.setContentsByID("hungerTable", [header, tableEl]);
-  });
-}
-
 function writePeriodsToTable(snapshot) {
-  console.log(snapshot);
 
   var tableEl = document.createElement("table");  //Creating the <table> element
 
@@ -172,20 +115,19 @@ function writePeriodsToTable(snapshot) {
     yearSnapshot.forEach(function(monthSnapshot) { // month
       monthSnapshot.forEach(function(daySnapshot) { // day
 
-        var childData = daySnapshot.val();
+        var eventData = daySnapshot.val();
 
-        console.log(childData);
         var date = new Date(daySnapshot.key * 1);
 
         rowEl = tableEl.insertRow(0);
         rowEl.insertCell().textContent =
           yearSnapshot.key + "/" + monthSnapshot.key + "/" + daySnapshot.key;
-        var eventType = Object.keys(childData)[0];
-        if (childData['level'] == '1') {
+        var eventType = Object.keys(eventData)[0];
+        if (eventData['level'] == '1') {
           rowEl.insertCell().textContent = "Spotting";
-        } else if (childData['level'] == '2') {
+        } else if (eventData['level'] == '2') {
         rowEl.insertCell().textContent = "Moderate";
-        } else if (childData['level'] == '3') {
+        } else if (eventData['level'] == '3') {
         rowEl.insertCell().textContent = "Heavy";
         }
 
@@ -207,9 +149,70 @@ function periodLevel(level) {
   var month = timestamp.getMonth() + 1;
   var day = timestamp.getDate() + 1;
   var datestring =timestamp.getFullYear() + '/' + month + '/' + day;
-  console.log(datestring);
   var obj = {'level': level}
   firebase.database().ref('periods/' + api.session.user.uid + '/' + datestring).set(obj);
+}
+
+function loadMore() {
+  var limit = prompt("How many to load?");
+  console.log("attempting read from " + api.session.lastItem);
+  var myEventsRef = firebase.database().ref('events/' + api.session.user.uid + "").orderByKey().limitToLast(parseInt(limit)).endAt(api.session.lastItem);
+  myEventsRef.on('value', (snapshot) => processSnapshot(snapshot));
+}
+
+function processSnapshot(snapshot) {
+  api.session.storeAccessor.processSnapshot(snapshot);
+
+  document.getElementById("hungerTable").innerHTML = "";
+  var tableEl = document.createElement("table");  //Creating the <table> element
+  var indexRow = tableEl.rows.length;
+
+  Object.keys(api.session.storeAccessor.events)
+  .sort()
+  .forEach(function(timestamp, i) {
+    const eventData = api.session.storeAccessor.events[timestamp];
+    const date = dateToStringWithoutSeconds(timestamp * 1);
+    rowEl = tableEl.insertRow(indexRow);
+    rowEl.insertCell().textContent = date;
+    var eventType = Object.keys(eventData)[0];
+    if (eventType == 'hunger') {
+      rowEl.insertCell().textContent = "Hunger level " + eventData['hunger'];
+    } else if (eventType == 'water') {
+      rowEl.insertCell().textContent = "Drank a cup of water";
+    } else if (eventType == 'medicine') {
+      rowEl.insertCell().textContent = "Took " + eventData['medicine'];
+    } else if (eventType == 'sleep') {
+      rowEl.insertCell().textContent = "Went to bed / Woke up";
+    } else if (eventType == 'food') {
+      var text = "Ate " + eventData['food']['description'];
+      if (eventData['food']['photo']) {
+        text += " " + eventData['food']['photo'];
+      }
+      rowEl.insertCell().textContent = text;
+    } else if (eventType == 'feeling') {
+      var text = "Feeling bad " + eventData['feeling']['level'];
+      if (eventData['feeling']['description']) {
+        text += " \"" + eventData['feeling']['description'] + "\"";
+      }
+      rowEl.insertCell().textContent =  text;
+    } else if (eventData.type =="image"){
+      const img = document.createElement('img');
+      img.src = eventData['dataURL'];
+      img.id = 'photoEvent';
+      rowEl.insertCell().appendChild(img);
+    }
+
+    var btn = document.createElement('input');
+    btn.type = "button";
+    btn.value = 'x';
+    btn.onclick = (function(event) {
+      delete api.session.storeAccessor.events[timestamp];
+      firebase.database().ref('events/' + api.session.user.uid + "/" + timestamp).remove();
+    });
+    rowEl.insertCell().appendChild(btn);
+  });
+  const header = document.createTextNode("Events for " + api.session.user.email);
+  DOMUtils.setContentsByID("hungerTable", [header, tableEl]);
 }
 
 /**
@@ -228,4 +231,5 @@ Object.assign(api.actions, {
   writeMedicine,
   writeSleep,
   writeWater,
+  loadMore,
 });
