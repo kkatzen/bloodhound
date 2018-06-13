@@ -210,6 +210,26 @@ function processSnapshot(snapshot) {
       firebase.database().ref('events/' + api.session.user.uid + "/" + timestamp).remove();
     });
     rowEl.insertCell().appendChild(btn);
+
+if( eventType == 'hunger'||eventType == 'medicine'||eventType == 'food'||eventType == 'feeling') {
+    var btn = document.createElement('input');
+    btn.type = "button";
+    btn.value = 'e';
+    btn.onclick = (function(event) {
+      if (eventType == 'hunger') {
+        eventData['hunger'] = prompt("what hunger level?");
+      } else if (eventType == 'medicine') {
+        eventData['medicine'] = prompt("what medicine level?");
+      } else if (eventType == 'food') {
+        eventData['food']['description'] = prompt("what food?");
+      } else if (eventType == 'feeling') {
+        eventData['feeling']['level'] = prompt("what feeling level?");
+        eventData['feeling']['description'] = prompt("what description?");
+      }
+      firebase.database().ref('events/' + api.session.user.uid + '/' + timestamp).set(eventData);
+    });
+    rowEl.insertCell().appendChild(btn);
+    }
   });
   const header = document.createTextNode("Events for " + api.session.user.email);
   DOMUtils.setContentsByID("hungerTable", [header, tableEl]);
