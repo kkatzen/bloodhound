@@ -6,6 +6,7 @@ const React = require('react');
 const ReactDOM = require('react-dom');
 const TakePhoto = require('./components/TakePhoto.react.js');
 const CirclePuppy = require('./components/CirclePuppy.react.js');
+const ScaleButtons = require('./components/ScaleButtons.react.js');
 
 var provider = new firebase.auth.GoogleAuthProvider();
 
@@ -21,6 +22,10 @@ window.onload = function() {
     document.getElementById('waterCirclePuppy'));
   ReactDOM.render(<CirclePuppy imagePath="img/sleep.png" onClick={api.actions.writeSleep}/>,
     document.getElementById('sleepyCirclePuppy'));
+  ReactDOM.render(<ScaleButtons onClick={writeHunger} min={0} max={5} />,
+    document.getElementById('hungerButtons'));    
+  ReactDOM.render(<ScaleButtons onClick={feelingBad} min={1} max={5} />,
+    document.getElementById('feelingButtons'));    
 }
 
 firebase
@@ -85,24 +90,21 @@ function setUser(newUser) {
   myPeriodsRef.on('value', (snapshot) => writePeriodsToTable(snapshot));
 }
 
-
 function getInitialData() {
   var myEventsRef = firebase
     .database()
-    .ref("events/" + newUser.uid + "")
+    .ref("events/" + api.session.user.uid + "")
     .limitToLast(5);
   myEventsRef.on("value", snapshot => processSnapshot(snapshot));
-  var myPeriodsRef = firebase.database().ref("periods/" + newUser.uid + "");
+  var myPeriodsRef = firebase.database().ref("periods/" + api.session.user.uid + "");
   myPeriodsRef.on("value", snapshot => writePeriodsToTable(snapshot));
 }
 
 function writeHunger(level) {
-  console.log("WRITING HUNGER");
   api.session.storeAccessor.writeEvent({ hunger: level });
 }
 
 function feelingBad(level) {
-  console.log("WRITING FEELING BAD LEVEL");
   var feelingEvent = { level: level };
   var description = prompt("how do you feel");
   if (description != undefined) {
@@ -112,17 +114,14 @@ function feelingBad(level) {
 }
 
 function writeMedicine(name) {
-  console.log("WRITING MEDICINE");
   api.session.storeAccessor.writeEvent({ medicine: name });
 }
 
 function writeWater(level) {
-  console.log("WRITING WATER");
   api.session.storeAccessor.writeEvent({ water: "sips sip" });
 }
 
 function writeSleep(level) {
-  console.log("WRITING SLEEP");
   api.session.storeAccessor.writeEvent({ sleep: "zzz" });
 }
 
@@ -177,7 +176,6 @@ function writePeriodsToTable(snapshot) {
 }
 
 function periodLevel(level) {
-  console.log("WRITING PERIOD");
   var timestamp = new Date();
   var month = timestamp.getMonth() + 1;
   var day = timestamp.getDate() + 1;

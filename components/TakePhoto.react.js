@@ -6,8 +6,8 @@ class TakePhoto extends React.Component {
   render() {
     return (
 	   <div>
-	    <button class="takePhotoButton" onClick={takePhoto}>
-	      <img src="../img/camera.jpg" class="fullRowHeight" />
+	    <button className="takePhotoButton" onClick={takePhoto}>
+	      <img src="../img/camera.jpg" className="fullRowHeight" />
 	      <div id="lastPhotoPreviewContainer"></div>
 	    </button>
 	  </div>
