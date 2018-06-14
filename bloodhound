@@ -26,12 +26,12 @@ case "$1" in
 		exit 0
 		;;
 	"serve")
-		watchify app.js -o bundle.js &
+		watchify app.js -t babelify -o bundle.js &
 		firebase serve
 		exit 0
 		;;
 	"deploy"|"derploy")
-		browserify app.js -o bundle.js
+		browserify app.js -t babelify -o bundle.js
 		firebase deploy
 		exit 0
 		;;

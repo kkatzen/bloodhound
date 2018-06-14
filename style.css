@@ -29,6 +29,15 @@ button:active {
   padding: 5px;
 }
 
+
+.circlePuppies div {
+  float:left;
+}
+
+.circlePuppies div button img {
+  height: 100px;
+}
+
 .fullRowHeight {
   height: 100px;
 }
