@@ -1,12 +1,9 @@
 const DOMUtils = require("./utils/DOMUtils.js");
-
 const buildSession = require("./buildSession.js");
 const dateToStringWithoutSeconds = require("./utils/dateToStringWithoutSeconds.js");
 const React = require('react');
 const ReactDOM = require('react-dom');
-const TakePhoto = require('./components/TakePhoto.react.js');
-const CirclePuppy = require('./components/CirclePuppy.react.js');
-const ScaleButtons = require('./components/ScaleButtons.react.js');
+const ActionView = require('./components/ActionView.react.js');
 const TemporaryDrawer = require('./components/TemporaryDrawer.react.js');
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
@@ -22,21 +19,16 @@ provider.setCustomParameters({
 
 
 window.onload = function() {
-  ReactDOM.render(<TakePhoto />, document.getElementById('photo'));
-  ReactDOM.render(<CirclePuppy imagePath="img/water.png" onClick={api.actions.writeWater}/>,
-    document.getElementById('waterCirclePuppy'));
-  ReactDOM.render(<CirclePuppy imagePath="img/sleep.png" onClick={api.actions.writeSleep}/>,
-    document.getElementById('sleepyCirclePuppy'));
-  ReactDOM.render(<ScaleButtons onClick={writeHunger} min={0} max={5} />,
-    document.getElementById('hungerButtons'));
-  ReactDOM.render(<ScaleButtons onClick={feelingBad} min={1} max={5} />,
-    document.getElementById('feelingButtons'));
+  ReactDOM.render(<ActionView />, document.getElementById('actionView'));
   ReactDOM.render(
     (
       <TemporaryDrawer>
-        <List>hi</List>
+        <div>
+          <h1>Go places, do stuff...</h1>
+        </div>
         <Divider />
-        <List>hi</List>
+        <div onClick={() => {}}>Actions</div>
+        <div onClick={() => {}}>Log</div>
       </TemporaryDrawer>
     ),
     document.getElementById('drawer'),
@@ -115,40 +107,6 @@ function getInitialData() {
   myPeriodsRef.on("value", snapshot => writePeriodsToTable(snapshot));
 }
 
-function writeHunger(level) {
-  api.session.storeAccessor.writeEvent({ hunger: level });
-}
-
-function feelingBad(level) {
-  var feelingEvent = { level: level };
-  var description = prompt("how do you feel");
-  if (description != undefined) {
-    feelingEvent["description"] = description;
-  }
-  api.session.storeAccessor.writeEvent({ feeling: feelingEvent });
-}
-
-function writeMedicine(name) {
-  api.session.storeAccessor.writeEvent({ medicine: name });
-}
-
-function writeWater(level) {
-  api.session.storeAccessor.writeEvent({ water: "sips sip" });
-}
-
-function writeSleep(level) {
-  api.session.storeAccessor.writeEvent({ sleep: "zzz" });
-}
-
-function writeFood() {
-  var foodEvent = {};
-  var description = prompt("Description");
-  if (description != undefined) {
-    foodEvent["description"] = description;
-  }
-  api.session.storeAccessor.writeEvent({ food: foodEvent });
-}
-
 function writePeriodsToTable(snapshot) {
 
   var tableEl = document.createElement("table"); //Creating the <table> element
@@ -164,7 +122,7 @@ function writePeriodsToTable(snapshot) {
 
         var date = new Date(daySnapshot.key * 1);
 
-        rowEl = tableEl.insertRow(0);
+        const rowEl = tableEl.insertRow(0);
         rowEl.insertCell().textContent =
           yearSnapshot.key + "/" + monthSnapshot.key + "/" + daySnapshot.key;
         var eventType = Object.keys(eventData)[0];
@@ -226,7 +184,7 @@ function processSnapshot(snapshot) {
     .forEach(function(timestamp, i) {
       const eventData = api.session.storeAccessor.events[timestamp];
       const date = dateToStringWithoutSeconds(timestamp * 1);
-      rowEl = tableEl.insertRow(indexRow);
+      const rowEl = tableEl.insertRow(indexRow);
       rowEl.insertCell().textContent = date;
       var eventType = Object.keys(eventData)[0];
       if (eventType == "hunger") {
@@ -308,14 +266,8 @@ function processSnapshot(snapshot) {
  * HTML needs to refer to. See api.js for more details.
  */
 Object.assign(api.actions, {
-  feelingBad,
   logIn,
   periodLevel,
   signOut,
-  writeFood,
-  writeHunger,
-  writeMedicine,
-  writeSleep,
-  writeWater,
   loadMore
 });
