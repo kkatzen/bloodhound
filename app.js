@@ -7,6 +7,8 @@ const ReactDOM = require('react-dom');
 const TakePhoto = require('./components/TakePhoto.react.js');
 const CirclePuppy = require('./components/CirclePuppy.react.js');
 const ScaleButtons = require('./components/ScaleButtons.react.js');
+const TemporaryDrawer = require('./components/TemporaryDrawer.react.js');
+console.log(TemporaryDrawer);
 
 var provider = new firebase.auth.GoogleAuthProvider();
 
@@ -15,6 +17,7 @@ firebase.auth().languageCode = "ens";
 provider.setCustomParameters({
   login_hint: "user@example.com"
 });
+
 
 window.onload = function() {
   ReactDOM.render(<TakePhoto />, document.getElementById('photo'));
@@ -25,7 +28,9 @@ window.onload = function() {
   ReactDOM.render(<ScaleButtons onClick={writeHunger} min={0} max={5} />,
     document.getElementById('hungerButtons'));    
   ReactDOM.render(<ScaleButtons onClick={feelingBad} min={1} max={5} />,
-    document.getElementById('feelingButtons'));    
+    document.getElementById('feelingButtons'));   
+  ReactDOM.render(<TemporaryDrawer />,
+    document.getElementById('drawer'));   
 }
 
 firebase
