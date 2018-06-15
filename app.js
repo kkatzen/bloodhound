@@ -154,7 +154,7 @@ function writePeriodsToTable(snapshot) {
 
         var date = new Date(daySnapshot.key * 1);
 
-        rowEl = tableEl.insertRow(0);
+        const rowEl = tableEl.insertRow(0);
         rowEl.insertCell().textContent =
           yearSnapshot.key + "/" + monthSnapshot.key + "/" + daySnapshot.key;
         var eventType = Object.keys(eventData)[0];
@@ -216,7 +216,7 @@ function processSnapshot(snapshot) {
     .forEach(function(timestamp, i) {
       const eventData = api.session.storeAccessor.events[timestamp];
       const date = dateToStringWithoutSeconds(timestamp * 1);
-      rowEl = tableEl.insertRow(indexRow);
+      const rowEl = tableEl.insertRow(indexRow);
       rowEl.insertCell().textContent = date;
       var eventType = Object.keys(eventData)[0];
       if (eventType == "hunger") {

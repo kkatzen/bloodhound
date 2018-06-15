@@ -22,6 +22,7 @@ function _gotMedia(mediaStream) {
       });
       _setLastPhoto(dataURL);
     });
+    mediaStreamTrack.stop()
   })
   .catch(error => console.error('takePhoto() error:', error));
 }
