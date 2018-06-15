@@ -8,6 +8,8 @@ const TakePhoto = require('./components/TakePhoto.react.js');
 const CirclePuppy = require('./components/CirclePuppy.react.js');
 const ScaleButtons = require('./components/ScaleButtons.react.js');
 const TemporaryDrawer = require('./components/TemporaryDrawer.react.js');
+import List from "@material-ui/core/List";
+import Divider from "@material-ui/core/Divider";
 console.log(TemporaryDrawer);
 
 var provider = new firebase.auth.GoogleAuthProvider();
@@ -26,11 +28,19 @@ window.onload = function() {
   ReactDOM.render(<CirclePuppy imagePath="img/sleep.png" onClick={api.actions.writeSleep}/>,
     document.getElementById('sleepyCirclePuppy'));
   ReactDOM.render(<ScaleButtons onClick={writeHunger} min={0} max={5} />,
-    document.getElementById('hungerButtons'));    
+    document.getElementById('hungerButtons'));
   ReactDOM.render(<ScaleButtons onClick={feelingBad} min={1} max={5} />,
-    document.getElementById('feelingButtons'));   
-  ReactDOM.render(<TemporaryDrawer />,
-    document.getElementById('drawer'));   
+    document.getElementById('feelingButtons'));
+  ReactDOM.render(
+    (
+      <TemporaryDrawer>
+        <List>hi</List>
+        <Divider />
+        <List>hi</List>
+      </TemporaryDrawer>
+    ),
+    document.getElementById('drawer'),
+  );
 }
 
 firebase
