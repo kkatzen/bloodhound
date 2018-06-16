@@ -3,7 +3,7 @@ const buildSession = require("./buildSession.js");
 const dateToStringWithoutSeconds = require("./utils/dateToStringWithoutSeconds.js");
 const React = require('react');
 const ReactDOM = require('react-dom');
-const ActionView = require('./components/ActionView.react.js');
+const AppBody = require('./components/AppBody.react.js');
 const TemporaryDrawer = require('./components/TemporaryDrawer.react.js');
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
@@ -19,7 +19,7 @@ provider.setCustomParameters({
 
 
 window.onload = function() {
-  ReactDOM.render(<ActionView />, document.getElementById('actionView'));
+  ReactDOM.render(<AppBody />, document.getElementById('actionView'));
   ReactDOM.render(
     (
       <TemporaryDrawer>
