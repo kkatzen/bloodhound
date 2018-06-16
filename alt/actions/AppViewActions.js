@@ -1,8 +1,9 @@
 const alt = require('../alt.js');
 
-const AppViewState = {
+const AppView = {
   ACTIONS: 'ACTIONS',
   LOG: 'LOG',
+  PERIOD: 'PERIOD',
 };
 
 const Actions = {
@@ -12,6 +13,6 @@ const Actions = {
 };
 
 module.exports = {
-  AppViewState,
+  AppView,
   Actions: alt.createActions(Actions),
 };

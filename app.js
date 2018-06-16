@@ -4,10 +4,8 @@ const dateToStringWithoutSeconds = require("./utils/dateToStringWithoutSeconds.j
 const React = require('react');
 const ReactDOM = require('react-dom');
 const AppBody = require('./components/AppBody.react.js');
-const TemporaryDrawer = require('./components/TemporaryDrawer.react.js');
+const BloodhoundNavDrawer = require('./components/BloodhoundNavDrawer.react.js');
 import List from "@material-ui/core/List";
-import Divider from "@material-ui/core/Divider";
-console.log(TemporaryDrawer);
 
 var provider = new firebase.auth.GoogleAuthProvider();
 
@@ -19,19 +17,7 @@ provider.setCustomParameters({
 
 window.onload = function() {
   ReactDOM.render(<AppBody />, document.getElementById('actionView'));
-  ReactDOM.render(
-    (
-      <TemporaryDrawer>
-        <div>
-          <h1>Go places, do stuff...</h1>
-        </div>
-        <Divider />
-        <div onClick={() => {}}>Actions</div>
-        <div onClick={() => {}}>Log</div>
-      </TemporaryDrawer>
-    ),
-    document.getElementById('drawer'),
-  );
+  ReactDOM.render(<BloodhoundNavDrawer />, document.getElementById('drawer'));
 }
 
 firebase

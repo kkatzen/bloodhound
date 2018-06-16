@@ -3,7 +3,8 @@ const PropTypes = require("prop-types");
 const ActionView = require('./ActionView.react.js');
 const connectToStores = require('alt-utils/lib/connectToStores');
 const AppViewStore = require('../alt/stores/AppViewStore.js');
-const {AppViewState} = require('../alt/actions/AppViewStateActions.js');
+const {AppView} = require('../alt/actions/AppViewActions.js');
+const Period = require('./Period.react.js');
 
 class AppBody extends React.Component {
   constructor(props) {
@@ -20,9 +21,17 @@ class AppBody extends React.Component {
 
   render() {
     let content = null;
+    console.log(this.props);
     switch (this.props.currentView) {
-      case AppViewState.ACTIONS:
+      case AppView.ACTIONS:
         content = (<ActionView />);
+        break;
+      case AppView.LOG:
+        // TODO
+        content = null;
+        break;
+      case AppView.PERIOD:
+        content = (<Period />);
         break;
     }
 
@@ -31,7 +40,7 @@ class AppBody extends React.Component {
 }
 
 AppBody.propTypes = {
-  currentView: PropTypes.oneOf(Object.values(AppViewState)).isRequired,
+  currentView: PropTypes.oneOf(Object.values(AppView)).isRequired,
 }
 
 module.exports = connectToStores(AppBody);

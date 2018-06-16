@@ -1,5 +1,5 @@
 const alt = require('../alt');
-const {Actions, AppViewState} = require('../actions/AppViewStateActions.js');
+const {Actions, AppView} = require('../actions/AppViewActions.js');
 
 class AppViewStore {
   constructor() {
@@ -8,7 +8,7 @@ class AppViewStore {
     });
 
     this.state = {
-      currentView: AppViewState.ACTIONS,
+      currentView: AppView.ACTIONS,
     };
   }
 
