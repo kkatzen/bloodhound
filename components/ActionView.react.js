@@ -34,19 +34,21 @@ class ActionView extends React.Component {
         </Grid>
         </Grid>
         <Grid container spacing={8}>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={4} sm={2}>
             <div id="water" className="wide-div circlePuppies">
               <div className="waterCirclePuppy">
                 <CirclePuppy imagePath="img/water.png" onClick={writeWater} />
               </div>
+              </div>
+          </Grid>
+          <Grid item xs={4} sm={2}>
+            <div id="water" className="wide-div circlePuppies">
               <div className="sleepyCirclePuppy">
                 <CirclePuppy imagePath="img/sleep.png" onClick={writeSleep} />
               </div>
             </div>
           </Grid>
-          <Grid item xs={12} sm={6}>
-          </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={8}>
             <div id="medicine" className="wide-div">
               <img src="img/medicine.png" className="fullRowHeight" />
               <button onClick={writeMedicine.bind(null, "sumatriptan")}>

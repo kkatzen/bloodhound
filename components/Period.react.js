@@ -21,7 +21,6 @@ class Period extends React.Component {
 			</div>
 		);
 	}
-
 }
 
 function periodLevel(level) {
