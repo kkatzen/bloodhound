@@ -17,7 +17,6 @@ provider.setCustomParameters({
   login_hint: "user@example.com"
 });
 
-
 window.onload = function() {
   ReactDOM.render(<AppBody />, document.getElementById('actionView'));
   ReactDOM.render(
@@ -93,8 +92,8 @@ function setUser(newUser) {
   var myEventsRef = firebase.database().ref('events/' + newUser.uid + "").limitToLast(5);
   myEventsRef.on('value', (snapshot) => processSnapshot(snapshot));
 
-  var myPeriodsRef = firebase.database().ref('periods/' + newUser.uid + "");
-  myPeriodsRef.on('value', (snapshot) => writePeriodsToTable(snapshot));
+//  var myPeriodsRef = firebase.database().ref('periods/' + newUser.uid + "");
+ // myPeriodsRef.on('value', (snapshot) => writePeriodsToTable(snapshot));
 }
 
 function getInitialData() {
@@ -103,62 +102,10 @@ function getInitialData() {
     .ref("events/" + api.session.user.uid + "")
     .limitToLast(5);
   myEventsRef.on("value", snapshot => processSnapshot(snapshot));
-  var myPeriodsRef = firebase.database().ref("periods/" + api.session.user.uid + "");
-  myPeriodsRef.on("value", snapshot => writePeriodsToTable(snapshot));
+//  var myPeriodsRef = firebase.database().ref("periods/" + api.session.user.uid + "");
+ // myPeriodsRef.on("value", snapshot => writePeriodsToTable(snapshot));
 }
 
-function writePeriodsToTable(snapshot) {
-
-  var tableEl = document.createElement("table"); //Creating the <table> element
-
-  snapshot.forEach(function(yearSnapshot) {
-    // year
-    yearSnapshot.forEach(function(monthSnapshot) {
-      // month
-      monthSnapshot.forEach(function(daySnapshot) {
-        // day
-
-        var eventData = daySnapshot.val();
-
-        var date = new Date(daySnapshot.key * 1);
-
-        const rowEl = tableEl.insertRow(0);
-        rowEl.insertCell().textContent =
-          yearSnapshot.key + "/" + monthSnapshot.key + "/" + daySnapshot.key;
-        var eventType = Object.keys(eventData)[0];
-        if (eventData["level"] == "1") {
-          rowEl.insertCell().textContent = "Spotting";
-        } else if (eventData["level"] == "2") {
-          rowEl.insertCell().textContent = "Moderate";
-        } else if (eventData["level"] == "3") {
-          rowEl.insertCell().textContent = "Heavy";
-        }
-
-        var myNode = document.getElementById("periodTable");
-        while (myNode.firstChild) {
-          myNode.removeChild(myNode.firstChild);
-        }
-        var header = document.createTextNode(
-          "Periods for " + api.session.user.email
-        );
-        myNode.appendChild(header);
-        myNode.appendChild(tableEl);
-      });
-    });
-  });
-}
-
-function periodLevel(level) {
-  var timestamp = new Date();
-  var month = timestamp.getMonth() + 1;
-  var day = timestamp.getDate() + 1;
-  var datestring = timestamp.getFullYear() + "/" + month + "/" + day;
-  var obj = { level: level };
-  firebase
-    .database()
-    .ref("periods/" + api.session.user.uid + "/" + datestring)
-    .set(obj);
-}
 
 function loadMore() {
   var limit = prompt("How many to load?");
@@ -267,7 +214,6 @@ function processSnapshot(snapshot) {
  */
 Object.assign(api.actions, {
   logIn,
-  periodLevel,
   signOut,
   loadMore
 });
