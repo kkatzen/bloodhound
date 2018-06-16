@@ -10,22 +10,21 @@ class ActionView extends React.Component {
     return (
       <div>
         <Grid container spacing={8} justify="space-around"className="actionsGridContainer">
+          <CirclePuppy imagePath="img/hunger.png" onClick={writeFood} />
+          <CirclePuppy imagePath="img/water.png" onClick={writeWater} />
+          <CirclePuppy imagePath="img/sleep.png" onClick={writeSleep} />
           <Grid item xs={12} sm={6}>
-              <button id="food" onClick={writeFood}>
-                <img src="img/hunger.png" className="fullRowHeight" />
-              </button>
-              <ScaleButtons onClick={writeHunger} min={0} max={5} />
+            Hunger:
+            <ScaleButtons onClick={writeHunger} min={0} max={5} />
           </Grid>
           <Grid item xs={12} sm={6}>
               <TakePhoto />
           </Grid>
-          <Grid item xs={12} sm={12}>
+          <Grid item xs={6} sm={6}>
               <img src="img/sick.png" className="fullRowHeight" />
               <ScaleButtons onClick={feelingBad} min={1} max={5} />
           </Grid>
-          <CirclePuppy imagePath="img/water.png" onClick={writeWater} />
-          <CirclePuppy imagePath="img/sleep.png" onClick={writeSleep} />
-          <Grid item xs={12} sm={8}>
+          <Grid item xs={6} sm={6}>
               <img src="img/medicine.png" className="fullRowHeight" />
               <button onClick={writeMedicine.bind(null, "sumatriptan")}>
                 Sumatriptan
