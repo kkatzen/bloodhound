@@ -1,23 +1,26 @@
 const React = require("react");
 const PropTypes = require("prop-types");
+import Grid from "@material-ui/core/Grid";
 
 class CirclePuppy extends React.Component {
-	constructor(props) {
-		super(props);
-	}
+  constructor(props) {
+    super(props);
+  }
 
   render() {
     return (
-	    <button onClick={this.props.onClick}>
-	   		<img src={this.props.imagePath} />
-   		</button>
+      <Grid item xs={3} sm={2} className="circlePuppyGridItem">
+        <button onClick={this.props.onClick}>
+          <img src={this.props.imagePath} />
+        </button>
+      </Grid>
     );
   }
 }
 
 CirclePuppy.propTypes = {
-	onClick: PropTypes.func.isRequired,
-	imagePath: PropTypes.string
-}
+  onClick: PropTypes.func.isRequired,
+  imagePath: PropTypes.string
+};
 
 module.exports = CirclePuppy;

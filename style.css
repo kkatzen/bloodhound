@@ -31,41 +31,8 @@ button:active {
   padding: 5px;
 }
 
-
-.circlePuppies div {
-  float:left;
-}
-
-.circlePuppies div button img {
-  height: 100px;
-}
-
 .fullRowHeight {
   height: 100px;
-}
-
-#photo {}
-
-#medicine img, #feeling img, #period img {
-  float: right;
-}
-
-#food {
-  float: left;
-}
-
-#water button, #food, #photo button {
-  background: transparent;
-  border: 0px;
-  padding: 0;
-}
-
-#medicine {
-  padding: 5px;
-}
-
-#medicine button {
-  margin-top: 4px;
 }
 
 #hungerTable td {
@@ -84,6 +51,8 @@ button:active {
   display: table;
   position: relative;
   margin: 0 auto;
+  background: transparent;
+  border:none;
 }
 
 #photoPreview {
@@ -106,4 +75,42 @@ button:active {
   position:absolute;
   top: 0;
   left: 0;
+}
+
+
+.sickpuppy {
+  float:right;
+}
+
+#food {
+  float:left;
+  background: transparent;
+  border:none;
+}
+
+/*
+  Actions Grid Styling
+*/
+
+.actionsGridContainer div {
+  background: white;
+  margin-top: 10px;
+}
+
+/*
+  CIRCLE PUPPY COMPONENT STYLING
+*/
+
+.circlePuppyGridItem {
+  text-align: center;
+  background: transparent !important;
+}
+
+.circlePuppyGridItem button {
+  background: transparent;
+  border: 0;
+}
+
+.circlePuppyGridItem img{
+  height: 100px;
 }
