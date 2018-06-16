@@ -26,26 +26,7 @@
     <button onclick="api.actions.signOut()">Sign out</button>
     <button onclick="api.actions.logIn()">Login</button>
   </div>
-  <div id="hunger" class="wide-div">
-    <button id="food" onclick="api.actions.writeFood()"><img src="img/hunger.png" class="fullRowHeight"></button>
-    <div id='hungerButtons'></div>
-  </div>
-  <div id="photo" class="wide-div">
-  </div>
-  <div id="feeling" class="wide-div">
-    <img src="img/sick.png" class="fullRowHeight">
-    <div id="feelingButtons"></div>
-  </div>
-  <div id="water" class="wide-div circlePuppies">
-    <div id="waterCirclePuppy" ></div>
-    <div id="sleepyCirclePuppy"></div>
-  </div>
-  <div id="medicine" class="wide-div">
-      <img src="img/medicine.png" class="fullRowHeight">
-    <button onclick="api.actions.writeMedicine('sumatriptan')">Sumatriptan</button>
-    <button onclick="api.actions.writeMedicine('ibuprofen')">Ibuprofen</button>
-    <button onclick="api.actions.writeMedicine('acetamenophin')">Acetamenophin</button>
-  </div>
+  <div id="actionView"></div>
   <div id="hungerTable"></div>
   <button onclick="api.actions.loadMore()">load more</button>
   <div id="period" class="wide-div">

@@ -3,16 +3,12 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import Button from "@material-ui/core/Button";
-import List from "@material-ui/core/List";
-import Divider from "@material-ui/core/Divider";
+
 
 const styles = {
-  list: {
-    width: 250
-  },
-  fullList: {
-    width: "auto"
-  }
+    drawer: {
+      width: 250,
+    },
 };
 
 class TemporaryDrawer extends React.Component {
@@ -31,19 +27,9 @@ class TemporaryDrawer extends React.Component {
   render() {
     const { classes } = this.props;
 
-    const sideList = (
-      <div className={classes.list}>
-        <List>hi</List>
-        <Divider />
-        <List>hi</List>
-      </div>
-    );
-
-    const fullList = (
-      <div className={classes.fullList}>
-        <List>yo</List>
-        <Divider />
-        <List>yo</List>
+    const contents = (
+      <div className={classes.drawer}>
+        {this.props.children}
       </div>
     );
 
@@ -57,7 +43,7 @@ class TemporaryDrawer extends React.Component {
             onClick={this.toggleDrawer(false)}
             onKeyDown={this.toggleDrawer(false)}
           >
-            {sideList}
+            {contents}
           </div>
         </Drawer>
       </div>
@@ -67,7 +53,10 @@ class TemporaryDrawer extends React.Component {
 
 TemporaryDrawer.propTypes = {
   classes: PropTypes.object.isRequired,
-  children: PropTypes.object
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node
+  ]),
 };
 
 // https://material-ui.com/demos/drawers/
