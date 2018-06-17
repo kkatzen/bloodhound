@@ -1,5 +1,6 @@
 const React = require("react");
 const PropTypes = require("prop-types");
+import Grid from "@material-ui/core/Grid";
 
 class ScaleButtons extends React.Component {
   constructor(props) {
@@ -20,14 +21,18 @@ class ScaleButtons extends React.Component {
       );
     }
 
-    return <div className="scaleButtons">{buttons}</div>;
+    return (<Grid item xs={this.props.xsGridWidth} sm={6}>
+      <div className="scaleButtons">{buttons}</div>
+    </Grid>)
+    ;
   }
 }
 
 ScaleButtons.propTypes = {
   onClick: PropTypes.func.isRequired,
   min: PropTypes.number,
-  max: PropTypes.number
+  max: PropTypes.number,
+  xsGridWidth: PropTypes.number
 };
 
 module.exports = ScaleButtons;

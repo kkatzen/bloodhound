@@ -46,15 +46,8 @@ class LogView extends React.Component {
   }
 
   getEventDeleteButton(timestamp) {
-    const deleteEvent = () => {
-      EventActions.deleteEvent(timestamp);
-      firebase
-        .database()
-        .ref("events/" + this.props.user.uid + "/" + timestamp)
-        .remove();
-    };
     return (
-      <IconButton aria-label="Delete" onClick={deleteEvent}>
+      <IconButton aria-label="Delete" onClick={() => this.props.ioMgr.deleteEvent(timestamp)}>
         <DeleteIcon />
       </IconButton>
     );
@@ -168,7 +161,8 @@ class LogView extends React.Component {
 
 LogView.propTypes = {
   events: PropTypes.object.isRequired,
-  user: PropTypes.object
+  user: PropTypes.object,
+  ioMgr: PropTypes.object.isRequired,
 };
 
 module.exports = connectToStores(LogView);

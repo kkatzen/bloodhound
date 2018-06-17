@@ -20,7 +20,7 @@ class CirclePuppy extends React.Component {
 
 CirclePuppy.propTypes = {
   onClick: PropTypes.func.isRequired,
-  imagePath: PropTypes.string
+  imagePath: PropTypes.string,
 };
 
 module.exports = CirclePuppy;

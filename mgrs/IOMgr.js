@@ -23,15 +23,19 @@ class IOMgr {
       .ref("events/" + uid + "")
       .orderByKey()
       .limitToLast(parseInt(limit)+1)
-      .endAt(lastItem);
-    myEventsRef.on("value", snapshot => this._processSnapshot(snapshot));
+      .endAt(lastItem)
+      .once('value')
+      .then(snapshot => this._processSnapshot(snapshot));
   }
 
   writeEvent(event) {
-    console.log("writeEvent");
-    console.log(event);
-    // These should be written in batches
     const timestamp = new Date().getTime();
+
+    // TODO: Maybe don't dispatch this locally.
+    // Listen to DB changes and update UI when change is commited.
+    EventActions.addEvent(timestamp, event);
+
+    // These should be written in batches
     const user = this._getUser();
     console.log("WRITING EVENT FOR: " + user.email);
     firebase
@@ -41,14 +45,29 @@ class IOMgr {
     console.log("EVENTS UPDATED.");
   }
 
+  deleteEvent(timestamp) {
+    console.log('xxdelete');
+    // TODO: Maybe don't dispatch this locally.
+    // Listen to DB changes and update UI when change is commited.
+    EventActions.deleteEvent(timestamp);
+
+    firebase
+      .database()
+      .ref("events/" + this.user.uid + "/" + timestamp)
+      .remove();
+  }
+
   _onChange(state) {
-    console.log('onUserLoad', {old: this.user, new: SessionStore.state.user})
     if (this.user != SessionStore.state.user) {
+      this._onUserChange();
+    }
+  }
+
+  _onUserChange(state) {
       this.user = SessionStore.state.user;
       if (this.user != null) {
         this._getInitialData();
       }
-    }
   }
 
   _processSnapshot(snapshot) {
@@ -78,8 +97,9 @@ class IOMgr {
     const myEventsRef = firebase
       .database()
       .ref("events/" + this.user.uid + "")
-      .limitToLast(5);
-    myEventsRef.on("value", snapshot => this._processSnapshot(snapshot));
+      .limitToLast(5)
+      .once("value")
+      .then(snapshot => this._processSnapshot(snapshot));
   }
 }
 

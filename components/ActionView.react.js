@@ -55,16 +55,13 @@ class ActionView extends React.Component {
           <CirclePuppy imagePath="img/hunger.png" onClick={() => this.writeFood()} />
           <CirclePuppy imagePath="img/water.png" onClick={() => this.writeWater()} />
           <CirclePuppy imagePath="img/sleep.png" onClick={() => this.writeSleep()} />
-          <Grid item xs={12} sm={6}>
-            Hunger:
-            <ScaleButtons onClick={(i) => this.writeHunger(i)} min={0} max={5} />
-          </Grid>
+          <ScaleButtons onClick={(i) => this.writeHunger(i)} min={0} max={5} xsGridWidth={12}/>
           <Grid item xs={12} sm={6}>
               <TakePhoto ioMgr={this.props.ioMgr} />
           </Grid>
           <Grid item xs={6} sm={6}>
               <img src="img/sick.png" className="fullRowHeight" />
-              <ScaleButtons onClick={(i) => this.feelingBad(i)} min={1} max={5} />
+              <ScaleButtons onClick={(i) => this.feelingBad(i)} min={1} max={5} xsGridWidth={12}/>
           </Grid>
           <Grid item xs={6} sm={6}>
               <img src="img/medicine.png" className="fullRowHeight" />
