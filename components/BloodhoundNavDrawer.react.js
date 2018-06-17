@@ -3,7 +3,6 @@ const PropTypes = require("prop-types");
 const TemporaryDrawer = require("./lib/TemporaryDrawer.react.js");
 const { Actions, AppView } = require("../alt/actions/AppViewActions.js");
 import Divider from "@material-ui/core/Divider";
-import Button from "@material-ui/core/Button";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";

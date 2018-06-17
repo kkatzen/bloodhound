@@ -1,6 +1,7 @@
 const React = require("react");
 const PropTypes = require("prop-types");
 const ActionView = require('./ActionView.react.js');
+const LogView = require('./LogView.react.js');
 const connectToStores = require('alt-utils/lib/connectToStores');
 const AppViewStore = require('../alt/stores/AppViewStore.js');
 const {AppView} = require('../alt/actions/AppViewActions.js');
@@ -27,8 +28,7 @@ class AppBody extends React.Component {
         content = (<ActionView ioMgr={this.props.ioMgr} />);
         break;
       case AppView.LOG:
-        // TODO
-        content = null;
+        content = (<LogView ioMgr={this.props.ioMgr} />);
         break;
       case AppView.PERIOD:
         content = (<Period ioMgr={this.props.ioMgr} />);
