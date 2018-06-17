@@ -1,5 +1,5 @@
 const React = require("react");
-const takePhoto = require("../actions/takePhoto.js");
+const takePhoto = require("../api/takePhoto.js");
 
 class TakePhoto extends React.Component {
 
