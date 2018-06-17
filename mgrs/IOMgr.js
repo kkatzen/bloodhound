@@ -66,11 +66,11 @@ class IOMgr {
   }
 
   _getUser() {
-    return this.props.user;
+    return this.user;
   }
 
   _getLastItemLoaded() {
-    return this.props.lastItemLoaded;
+    return SessionStore.state.lastItemLoaded;
   }
 
   _getInitialData() {

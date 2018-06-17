@@ -1,5 +1,6 @@
 const React = require("react");
 const PropTypes = require("prop-types");
+const SessionStore = require("../alt/stores/SessionStore.js");
 
 class Period extends React.Component {
 	constructor(props) {
@@ -7,7 +8,7 @@ class Period extends React.Component {
 		setTimeout(() => {
 			var myPeriodsRef = firebase
 				.database()
-				.ref("periods/" + api.session.user.uid + "");
+				.ref("periods/" + SessionStore.state.user.uid + "");
 			myPeriodsRef.on("value", snapshot => writePeriodsToTable(snapshot));
 		}, 3000);
 	}
@@ -31,7 +32,7 @@ function periodLevel(level) {
   var obj = { level: level };
   firebase
     .database()
-    .ref("periods/" + api.session.user.uid + "/" + datestring)
+    .ref("periods/" + SessionStore.state.user.uid + "/" + datestring)
     .set(obj);
 }
 
@@ -67,7 +68,7 @@ function writePeriodsToTable(snapshot) {
           myNode.removeChild(myNode.firstChild);
         }
         var header = document.createTextNode(
-          "Periods for " + api.session.user.email
+          "Periods for " + SessionStore.state.user.email
         );
         myNode.appendChild(header);
         myNode.appendChild(tableEl);

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import Button from "@material-ui/core/Button";
-
+import MenuIcon from '@material-ui/icons/Menu';
 
 const styles = {
     drawer: {
@@ -35,7 +35,7 @@ class TemporaryDrawer extends React.Component {
 
     return (
       <div>
-        <Button onClick={this.toggleDrawer(true)}>Open Left</Button>
+        <Button onClick={this.toggleDrawer(true)}><MenuIcon/></Button>
         <Drawer open={this.state.drawerOpen} onClose={this.toggleDrawer(false)}>
           <div
             tabIndex={0}
