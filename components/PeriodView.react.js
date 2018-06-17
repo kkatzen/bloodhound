@@ -16,6 +16,7 @@ class PeriodView extends React.Component {
 	render() {
 		return (
 			<div id="period" className="wide-div">
+        <h1>Periods</h1>
 			    <input type="radio" name="period" value="3" onClick={() => periodLevel(3)}/>Heavy
 			    <input type="radio" name="period" value="2" onClick={() => periodLevel(2)}/>Moderate
 			    <input type="radio" name="period" value="1" onClick={() => periodLevel(1)}/>Spotting

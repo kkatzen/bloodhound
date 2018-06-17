@@ -6,7 +6,6 @@ const dateToStringWithoutSeconds = require("../utils/dateToStringWithoutSeconds.
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
-import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import EventStore from "../alt/stores/EventStore.js";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -33,11 +32,17 @@ class LogView extends React.Component {
   }
 
   createEvent(timestamp, eventData) {
+    console.log(eventData);
     const id = timestamp;
     const time = dateToStringWithoutSeconds(timestamp * 1);
     const description = LogView.getEventText(eventData);
     const deleteButton = this.getEventDeleteButton(timestamp);
-    return { id, time, description, deleteButton };
+    const image = eventData["dataURL"];
+    let event = { id, time, description, deleteButton };
+    if (eventData.dataURL) {
+      event.image = eventData.dataURL;
+    }
+    return event;
   }
 
   getEventDeleteButton(timestamp) {
@@ -54,6 +59,7 @@ class LogView extends React.Component {
       </IconButton>
     );
   }
+
   /*
   getEditEventButton(timestamp) {
         if (
@@ -85,8 +91,9 @@ class LogView extends React.Component {
         }
 };
 */
+  
   static getEventText(eventData) {
-    console.log(eventData);
+    console.log("eventData",eventData);
 
     switch (Object.keys(eventData)[0]) {
       case "hunger":
@@ -110,7 +117,7 @@ class LogView extends React.Component {
         }
         return text;
       default:
-        return "oops idk man";
+        return "";
     }
 
     // TODO(kristak): add back iamges
@@ -139,25 +146,14 @@ class LogView extends React.Component {
 
     return (
       <div>
+        <h1>Event Log</h1>
         <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Time</TableCell>
-              <TableCell>Event</TableCell>
-              <TableCell>
-                <DeleteIcon />
-              </TableCell>
-              <TableCell>
-                <EditIcon />
-              </TableCell>
-            </TableRow>
-          </TableHead>
           <TableBody>
             {tableRows.map(n => {
               return (
                 <TableRow key={n.id}>
                   <TableCell>{n.time}</TableCell>
-                  <TableCell>{n.description}</TableCell>
+                  <TableCell>{n.description}{n.image && <img height="150px" src={n.image} />}</TableCell>
                   <TableCell>{n.deleteButton}</TableCell>
                 </TableRow>
               );

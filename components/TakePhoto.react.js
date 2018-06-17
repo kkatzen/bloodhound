@@ -1,18 +1,64 @@
 const React = require("react");
-const takePhoto = require("../api/takePhoto.js");
+
+const DOMUtils = require("../utils/DOMUtils.js");
+const PropTypes = require("prop-types");
+
+const blobToDataURL = require("../utils/blobToDataURL.js");
 
 class TakePhoto extends React.Component {
 
+  constructor(props) {
+    super(props);
+  }
+
   render() {
     return (
-	   <div>
-	    <button className="takePhotoButton" onClick={takePhoto}>
-	      <img src="../img/camera.jpg" className="fullRowHeight" />
-	      <div id="lastPhotoPreviewContainer"></div>
-	    </button>
-	  </div>
+      <div>
+        <button className="takePhotoButton" onClick={() => this._takePhoto()}>
+          <img src="../img/camera.jpg" className="fullRowHeight" />
+          <div id="lastPhotoPreviewContainer" />
+        </button>
+      </div>
     );
   }
+
+  _takePhoto() {
+    navigator.mediaDevices
+      .getUserMedia({ video: { facingMode: "environment" } })
+      .then((r) => this._gotMedia(r))
+      .catch(error => console.error("getUserMedia() error:", error));
+  }
+
+  _gotMedia(mediaStream) {
+    const mediaStreamTrack = mediaStream.getVideoTracks()[0];
+    const imageCapture = new ImageCapture(mediaStreamTrack);
+    console.log(imageCapture);
+
+    imageCapture
+      .takePhoto()
+      .then(blob => {
+        blobToDataURL(blob, dataURL => {
+          this.props.ioMgr.writeEvent({
+            type: "image",
+            dataURL
+          });
+          this._setLastPhoto(dataURL);
+        });
+        mediaStreamTrack.stop();
+      })
+      .catch(error => console.error("takePhoto() error:", error));
+  }
+
+  _setLastPhoto(dataURL /* string */) /* void */ {
+    const img = document.createElement("img");
+    img.src = dataURL;
+    img.id = "photoPreview";
+    DOMUtils.setContentsByID("lastPhotoPreviewContainer", [img]);
+  }
 }
+
+TakePhoto.propTypes = {
+  ioMgr: PropTypes.object.isRequired,
+};
 
 module.exports = TakePhoto;

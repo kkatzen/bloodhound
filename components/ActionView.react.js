@@ -50,6 +50,7 @@ class ActionView extends React.Component {
   render() {
     return (
       <div>
+        <h1>Actions</h1>
         <Grid container spacing={8} justify="space-around"className="actionsGridContainer">
           <CirclePuppy imagePath="img/hunger.png" onClick={() => this.writeFood()} />
           <CirclePuppy imagePath="img/water.png" onClick={() => this.writeWater()} />
@@ -59,7 +60,7 @@ class ActionView extends React.Component {
             <ScaleButtons onClick={(i) => this.writeHunger(i)} min={0} max={5} />
           </Grid>
           <Grid item xs={12} sm={6}>
-              <TakePhoto />
+              <TakePhoto ioMgr={this.props.ioMgr} />
           </Grid>
           <Grid item xs={6} sm={6}>
               <img src="img/sick.png" className="fullRowHeight" />

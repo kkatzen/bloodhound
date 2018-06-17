@@ -114,3 +114,9 @@ button:active {
 .circlePuppyGridItem img{
   height: 100px;
 }
+
+h1 {
+  padding: 5px;
+  font-size: 20pt;
+  text-align: center;
+}
