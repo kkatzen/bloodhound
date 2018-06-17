@@ -24,14 +24,14 @@ class AppBody extends React.Component {
     console.log(this.props);
     switch (this.props.currentView) {
       case AppView.ACTIONS:
-        content = (<ActionView />);
+        content = (<ActionView ioMgr={this.props.ioMgr} />);
         break;
       case AppView.LOG:
         // TODO
         content = null;
         break;
       case AppView.PERIOD:
-        content = (<Period />);
+        content = (<Period ioMgr={this.props.ioMgr} />);
         break;
     }
 
@@ -41,6 +41,7 @@ class AppBody extends React.Component {
 
 AppBody.propTypes = {
   currentView: PropTypes.oneOf(Object.values(AppView)).isRequired,
-}
+  ioMgr: PropTypes.object.isRequired,
+};
 
 module.exports = connectToStores(AppBody);

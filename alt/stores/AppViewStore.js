@@ -4,7 +4,7 @@ const {Actions, AppView} = require('../actions/AppViewActions.js');
 class AppViewStore {
   constructor() {
     this.bindListeners({
-      updateAppView: Actions.setAppView
+      _updateAppView: Actions.setAppView
     });
 
     this.state = {
@@ -12,7 +12,7 @@ class AppViewStore {
     };
   }
 
-  updateAppView(action) {
+  _updateAppView(action) {
     this.setState({ currentView: action.viewState});
   }
 }

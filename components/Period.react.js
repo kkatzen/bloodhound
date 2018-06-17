@@ -77,6 +77,7 @@ function writePeriodsToTable(snapshot) {
 }
 
 Period.propTypes = {
+  ioMgr: PropTypes.object.isRequired,
 };
 
 module.exports = Period;
