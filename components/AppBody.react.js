@@ -5,7 +5,7 @@ const LogView = require('./LogView.react.js');
 const connectToStores = require('alt-utils/lib/connectToStores');
 const AppViewStore = require('../alt/stores/AppViewStore.js');
 const {AppView} = require('../alt/actions/AppViewActions.js');
-const Period = require('./Period.react.js');
+const PeriodView = require('./PeriodView.react.js');
 const Settings = require('./SettingsView.react.js');
 
 class AppBody extends React.Component {
@@ -32,7 +32,7 @@ class AppBody extends React.Component {
         content = (<LogView ioMgr={this.props.ioMgr} />);
         break;
       case AppView.PERIOD:
-        content = (<Period ioMgr={this.props.ioMgr} />);
+        content = (<PeriodView ioMgr={this.props.ioMgr} />);
         break;
       case AppView.SETTINGS:
         content = (<Settings ioMgr={this.props.ioMgr} />);
