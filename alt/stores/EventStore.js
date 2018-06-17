@@ -24,12 +24,11 @@ class EventStore {
   }
 
   _deleteEvent(action) {
-    if (this.state[action.timestamp] == null) {
+    if (this.state.events[action.timestamp] == null) {
       return this.state;
     }
-    const state = {...this.state.events};
-    delete state[action.timestamp];
-    return state;
+    delete this.state.events[action.timestamp];
+    return this.state;
   }
 }
 

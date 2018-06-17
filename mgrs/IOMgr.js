@@ -14,18 +14,22 @@ class IOMgr {
   }
 
   loadMore() {
+    const uid = this._getUser().uid;
     const limit = prompt("How many to load?");
-    console.log("attempting read from " + api.session.lastItem);
+    const lastItem = SessionStore.state.lastItemLoaded;
+    console.log("attempting read from " + lastItem);
     const myEventsRef = firebase
       .database()
-      .ref("events/" + this.user.uid + "")
+      .ref("events/" + uid + "")
       .orderByKey()
-      .limitToLast(parseInt(limit))
-      .endAt(api.session.lastItem);
-    myEventsRef.on("value", snapshot => processSnapshot(snapshot));
+      .limitToLast(parseInt(limit)+1)
+      .endAt(lastItem);
+    myEventsRef.on("value", snapshot => this._processSnapshot(snapshot));
   }
 
   writeEvent(event) {
+    console.log("writeEvent");
+    console.log(event);
     // These should be written in batches
     const timestamp = new Date().getTime();
     const user = this._getUser();

@@ -14,6 +14,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
 const SessionStore = require("../alt/stores/SessionStore.js");
 import EventActions from "../alt/actions/EventActions.js";
+import Button from "@material-ui/core/Button";
 
 class LogView extends React.Component {
   constructor(props) {
@@ -125,14 +126,15 @@ class LogView extends React.Component {
 const tableRows = [];
 
     Object.keys(events)
-      .sort()
+      .sort().reverse()
       .forEach(function(timestamp, i) {
+        tableRows.push(LogView.createEvent(timestamp, events[timestamp]))
+      });
 
-        tableRows.push(LogView.createEvent(timestamp, events[timestamp]))});
 
-
-console.log("hi");
-    return (<Table >
+    return (
+      <div>
+      <Table >
         <TableHead>
           <TableRow>
             <TableCell>Time</TableCell>
@@ -152,7 +154,11 @@ console.log("hi");
             );
           })}
         </TableBody>
-      </Table>);
+      </Table>
+      <Button onClick={() => this.props.ioMgr.loadMore()}>
+        Load More
+      </Button>
+      </div>);
   }
 }
 

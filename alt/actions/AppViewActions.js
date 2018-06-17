@@ -4,6 +4,7 @@ const AppView = {
   ACTIONS: 'ACTIONS',
   LOG: 'LOG',
   PERIOD: 'PERIOD',
+  SETTINGS: 'SETTINGS',
 };
 
 const Actions = {

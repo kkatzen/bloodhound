@@ -14,7 +14,7 @@ class ScaleButtons extends React.Component {
     const buttons = [];
     for (let i = min; i <= max; i++) {
       buttons.push(
-        <button key={i} onClick={onClick.bind(null, i)}>
+        <button key={i} onClick={() => onClick(i)}>
           {i}
         </button>
       );

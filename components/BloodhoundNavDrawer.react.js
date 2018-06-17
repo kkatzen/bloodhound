@@ -39,7 +39,7 @@ class BloodhoundNavDrawer extends React.Component {
             </ListItemIcon>
             <ListItemText primary="Period" />
           </ListItem>
-          <ListItem button component="button">
+          <ListItem button component="button" onClick={() => Actions.setAppView(AppView.SETTINGS)}>
             <ListItemIcon>
               <SettingsIcon />
             </ListItemIcon>

@@ -5,6 +5,8 @@ const Actions = {
     return {timestamp, event};
   },
   deleteEvent: function(timestamp) {
+    console.log("deleteEvent");
+    console.log(timestamp);
     return {timestamp};
   },
   // setUser: function(user) {

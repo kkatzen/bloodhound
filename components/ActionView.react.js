@@ -12,6 +12,8 @@ class ActionView extends React.Component {
   }
 
   writeHunger(level) {
+    console.log("writeHunger");
+    console.log(level);
     this.props.ioMgr.writeEvent({ hunger: level });
   }
 
@@ -54,24 +56,24 @@ class ActionView extends React.Component {
           <CirclePuppy imagePath="img/sleep.png" onClick={() => this.writeSleep()} />
           <Grid item xs={12} sm={6}>
             Hunger:
-            <ScaleButtons onClick={() => this.writeHunger()} min={0} max={5} />
+            <ScaleButtons onClick={(i) => this.writeHunger(i)} min={0} max={5} />
           </Grid>
           <Grid item xs={12} sm={6}>
               <TakePhoto />
           </Grid>
           <Grid item xs={6} sm={6}>
               <img src="img/sick.png" className="fullRowHeight" />
-              <ScaleButtons onClick={() => this.feelingBad()} min={1} max={5} />
+              <ScaleButtons onClick={(i) => this.feelingBad(i)} min={1} max={5} />
           </Grid>
           <Grid item xs={6} sm={6}>
               <img src="img/medicine.png" className="fullRowHeight" />
-              <button onClick={this.writeMedicine.bind(null, "sumatriptan")}>
+              <button onClick={() => this.writeMedicine("sumatriptan")}>
                 Sumatriptan
               </button>
-              <button onClick={this.writeMedicine.bind(null, "ibuprofen")}>
+              <button onClick={() => this.writeMedicine("ibuprofen")}>
                 Ibuprofen
               </button>
-              <button onClick={this.writeMedicine.bind(null, "acetamenophin")}>
+              <button onClick={() => this.writeMedicine("acetamenophin")}>
                 Acetamenophin
               </button>
           </Grid>
