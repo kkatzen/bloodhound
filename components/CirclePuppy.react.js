@@ -9,7 +9,7 @@ class CirclePuppy extends React.Component {
 
   render() {
     return (
-      <Grid item xs={3} sm={2} className="circlePuppyGridItem">
+      <Grid item xs={3} sm={3} className="circlePuppyGridItem">
         <button onClick={this.props.onClick}>
           <img src={this.props.imagePath} />
         </button>

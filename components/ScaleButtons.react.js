@@ -1,6 +1,7 @@
 const React = require("react");
 const PropTypes = require("prop-types");
 import Grid from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
 
 class ScaleButtons extends React.Component {
   constructor(props) {
@@ -15,14 +16,14 @@ class ScaleButtons extends React.Component {
     const buttons = [];
     for (let i = min; i <= max; i++) {
       buttons.push(
-        <button key={i} onClick={() => onClick(i)}>
+        <Button variant="outlined" size="small" color="primary"  key={i} onClick={() => onClick(i)}>
           {i}
-        </button>
+        </Button>
       );
     }
 
-    return (<Grid item xs={this.props.xsGridWidth} sm={6}>
-      <div className="scaleButtons">{buttons}</div>
+    return (<Grid item xs={this.props.xsGridWidth} sm={this.props.xsGridWidth} className="scaleButtonGridItem">
+      {buttons}
     </Grid>)
     ;
   }
