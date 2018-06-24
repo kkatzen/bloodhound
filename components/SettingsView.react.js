@@ -5,11 +5,57 @@ const CirclePuppy = require("../components/CirclePuppy.react.js");
 const TextButton = require("../components/TextButton.react.js");
 const ScaleButtons = require("../components/ScaleButtons.react.js");
 import Grid from "@material-ui/core/Grid";
+const SessionStore = require("../alt/stores/SessionStore.js");
 
 class SettingsView extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {value: ''};
+    setTimeout(() => {
+      var configRef = firebase
+        .database()
+        .ref("configs/" + SessionStore.state.user.uid + "");
+    configRef.on("value", snapshot => this.getCurrentConfig(snapshot));
+    }, 1000);
   }
+
+  getCurrentConfig(snapshot) {
+    this.setState({value: snapshot.val()});
+  }
+
+  handleChange(event) {
+    console.log("handleChange", event);
+    this.setState({value: event.target.value});
+  }
+
+  handleSubmit(event) {
+    console.log('A name was submitted: ' + this.state.value);
+    event.preventDefault();
+    firebase
+      .database()
+      .ref("configs/" + SessionStore.state.user.uid)
+      .set(this.state.value);
+  }
+
+  render() {
+
+    return (
+    <form onSubmit={this.handleSubmit.bind(this)}>
+        <label>
+        <textarea name="textarea" value={this.state.value} onChange={this.handleChange.bind(this)}></textarea>
+        </label>
+        <input type="submit" value="Submit" />
+      </form>
+
+    );
+  }
+}
+
+SettingsView.propTypes = {
+  ioMgr: PropTypes.object.isRequired
+};
+
+module.exports = SettingsView;
 
   /*
 
@@ -40,171 +86,3 @@ gridWidth: <>
 
 */
 
-  createComponent(config) {
-    if (config.componentType == "CirclePuppy") {
-      return (
-        <CirclePuppy
-          imagePath={config.imagePath}
-          onClick={() => console.log(config.text)}
-          xsGridWidth={config.xsGridWidth} />
-      );
-    }  else {
-      return (<TextButton config={config} />);
-    }
-    /*
-    else if (config.componentType == "ScaleButtons") {
-      return (
-        <ScaleButtons
-          onClick={i => console.log(config.text + i)}
-          min={parseInt(config.min)}
-          max={parseInt(config.max)}
-          xsGridWidth={4}
-          xsGridWidth={config.xsGridWidth} />
-      );
-    }*/
-  }
-
-  render() {
-
-/*
-    components.push(
-      this.createComponent({
-        componentType: "CirclePuppy",
-        text: "one",
-        imagePath: "img/hunger.png",
-        xsGridWidth: 12
-      })
-    );
-
-*/
-    const components = [];
-    components.push(
-      this.createComponent({
-        componentType: "TextButton",
-        type: "photo",
-        xsGridWidth: 2,
-        iconName: "camera",
-        shape: "circle",
-        dev: true
-      })
-    );
-    components.push(
-      this.createComponent({
-        componentType: "TextButton",
-        type: "photo",
-        xsGridWidth: 1,
-        iconName: "camera",
-        shape: "circle",
-        dev: true
-      })
-    );
-    components.push(
-      this.createComponent({
-        componentType: "TextButton",
-        type: "photo",
-        xsGridWidth: 1,
-        iconName: "camera",
-        shape: "circle",
-        dev: true
-      })
-    );
-    components.push(
-      this.createComponent({
-        componentType: "TextButton",
-        text: "pets!!!",
-        xsGridWidth: 2,
-        iconName: "pets",
-        shape: "circle",
-        descriptionPrompt: true,
-        dev: true
-      })
-    );
-    components.push(
-      this.createComponent({
-        componentType: "TextButton",
-        text: "android",
-        pet: "pet",
-        xsGridWidth: 4,
-        iconName: "android",
-        dev: true
-      })
-    );
-    components.push(
-      this.createComponent({
-        componentType: "TextButton",
-        text: "android",
-        pet: "pet",
-        xsGridWidth: 3,
-        iconName: "android",
-        shape: "bigCircle",
-        dev: true
-      })
-    );
-    components.push(
-      this.createComponent({
-        componentType: "TextButton",
-        text: "android",
-        pet: "pet",
-        xsGridWidth: 3,
-        iconName: "android",
-        shape: "bigCircle",
-        dev: true
-      })
-    ); 
-    components.push(
-      this.createComponent({
-        componentType: "TextButton",
-        text: "android",
-        pet: "pet",
-        xsGridWidth: 3,
-        iconName: "android",
-        shape: "bigCircle",
-        dev: true
-      })
-    );
-    components.push(
-      this.createComponent({
-        componentType: "TextButton",
-        text: "android",
-        pet: "pet",
-        xsGridWidth: 3,
-        iconName: "android",
-        shape: "bigCircle",
-        dev: true
-      })
-    );
-    components.push(
-      this.createComponent({
-        componentType: "TextButton",
-        type: "photo",
-        xsGridWidth: 12,
-        iconName: "camera",
-        text: "AFSHEEN",
-        dev: true
-      })
-    );
-    console.log("components", components);
-
-    return (
-      <Grid
-        container
-        spacing={8}
-        justify="space-around"
-      >
-        <Grid item xs={12} sm={12}>
-          <h1>Dev Area- be warned!!!!</h1>
-        </Grid>
-
-        {components.map(component => {
-          return component;
-        })}
-      </Grid>
-    );
-  }
-}
-
-SettingsView.propTypes = {
-  ioMgr: PropTypes.object.isRequired
-};
-
-module.exports = SettingsView;

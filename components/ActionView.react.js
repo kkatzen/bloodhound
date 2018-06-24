@@ -5,8 +5,8 @@ const CirclePuppy = require("../components/CirclePuppy.react.js");
 const ImageComponent = require("../components/ImageComponent.react.js");
 const ScaleButtons = require("../components/ScaleButtons.react.js");
 const PeriodView = require("../components/PeriodView.react.js");
-import Grid from "@material-ui/core/Grid";
 const TextButton = require("../components/TextButton.react.js");
+import Grid from "@material-ui/core/Grid";
 
 class ActionView extends React.Component {
   constructor(props) {
