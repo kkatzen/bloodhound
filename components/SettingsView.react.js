@@ -29,12 +29,17 @@ class SettingsView extends React.Component {
   }
 
   handleSubmit(event) {
-    console.log('A name was submitted: ' + this.state.value);
     event.preventDefault();
+    try {
+        JSON.parse(this.state.value);
     firebase
       .database()
       .ref("configs/" + SessionStore.state.user.uid)
       .set(this.state.value);
+    }
+    catch(err) {
+        alert("INVALID JSON: " + err.message)
+    }
   }
 
   render() {
@@ -86,3 +91,81 @@ gridWidth: <>
 
 */
 
+
+/*
+{"components": [ {
+        "componentType": "ScaleButtons",
+        "type": "hunger",
+        "min": "1",
+        "max": "5",
+        "xsGridWidth": 12
+      },
+      {
+        "componentType": "CirclePuppy",
+        "descriptionPrompt": true,
+        "type": "food",
+        "imagePath": "img/hunger.png",
+        "xsGridWidth": 4
+      },
+      {
+        "componentType": "CirclePuppy",
+        "imagePath": "img/water.png",
+        "xsGridWidth": 4,
+        "type": "water"
+      },
+      {
+        "componentType": "CirclePuppy",
+        "imagePath": "img/sleep.png",
+        "xsGridWidth": 4,
+        "type": "sleep"
+      },
+      {
+        "componentType": "TakePhoto",
+        "xsGridWidth": 12
+      },
+      {
+        "componentType": "TextButton",
+        "xsGridWidth": 3,
+        "text": "Earl Tea",
+        "description": "Earl Grey Tea Soy creamer",
+        "type": "food"
+      },
+      {
+        "componentType": "ImageComponent",
+        "xsGridWidth": 12,
+        "imagePath": "img/sick.png"
+      },
+      {
+        "componentType": "TextButton",
+        "xsGridWidth": 4,
+        "text": "Sumatriptan",
+        "description": "Sumatriptan",
+        "type": "medicine"
+      },
+      {
+        "componentType": "TextButton",
+        "xsGridWidth": 4,
+        "text": "Ibuprofen",
+        "description": "Ibuprofen",
+        "type": "medicine"
+      },
+      {
+        "componentType": "TextButton",
+        "xsGridWidth": 4,
+        "text": "Acetamenophin",
+        "description": "Acetamenophin",
+        "type": "medicine"
+      },
+      {
+        "componentType": "ScaleButtons",
+        "type": "feeling",
+        "min": "1",
+        "max": "5",
+        "xsGridWidth": 12,
+        "descriptionPrompt": true
+      }
+    ]
+
+
+}
+*/

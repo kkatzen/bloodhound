@@ -7,14 +7,24 @@ const ScaleButtons = require("../components/ScaleButtons.react.js");
 const PeriodView = require("../components/PeriodView.react.js");
 const TextButton = require("../components/TextButton.react.js");
 import Grid from "@material-ui/core/Grid";
+const SessionStore = require("../alt/stores/SessionStore.js");
 
 class ActionView extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {currentConfig: JSON.parse("{\"components\": [{  \"componentType\": \"ImageComponent\", \"xsGridWidth\": \"12\", \"imagePath\": \"img/sick.png\"}]}")};
+
+    setTimeout(() => {
+      var configRef = firebase
+        .database()
+        .ref("configs/" + SessionStore.state.user.uid + "");
+    configRef.on("value", snapshot => this.getCurrentConfig(snapshot));
+    }, 1000);
   }
 
-  writeMedicine(name) {
-    this.props.ioMgr.writeEvent({ medicine: name });
+  getCurrentConfig(snapshot) {
+    this.setState({currentConfig: JSON.parse(snapshot.val())});
+    console.log("SET this.state.currentConfig", this.state.currentConfig);
   }
 
   createComponent(config) {
@@ -106,6 +116,10 @@ class ActionView extends React.Component {
       }
     ];
 
+console.log("this.state.currentConfig", this.state.currentConfig);
+console.log("typeof his.state.currentConfig", typeof this.state.currentConfig);
+console.log("typeof compnoents", typeof components);
+//console.log(JSON.parse(this.state.currentConfig));
     return (
       <div>
         <h1>Actions</h1>
@@ -115,7 +129,7 @@ class ActionView extends React.Component {
           justify="space-around"
           className="actionsGridContainer"
         >
-          {components.map(component => {
+          {this.state.currentConfig.components.map(component => {
             return this.createComponent(component);
           })}
         </Grid>

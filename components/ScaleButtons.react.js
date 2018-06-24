@@ -23,8 +23,6 @@ class ScaleButtons extends React.Component {
   }
 
   render() {
-    console.log("SCALED BUTTONS~!!!!!!!");
-    console.log("this.props", this.props);
     const { min, max } = this.props.config;
     if (min >= max) {
       throw new Error("You are dumb, learn to count!!");
