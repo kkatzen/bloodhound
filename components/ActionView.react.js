@@ -19,126 +19,104 @@ class ActionView extends React.Component {
 
   createComponent(config) {
     if (config.componentType == "CirclePuppy") {
-      return (
-        <CirclePuppy config={config} ioMgr={this.props.ioMgr}/>
-      );
+      return <CirclePuppy config={config} ioMgr={this.props.ioMgr} />;
     } else if (config.componentType == "ScaleButtons") {
-      return (
-        <ScaleButtons config={config} ioMgr={this.props.ioMgr} />
-      );
+      return <ScaleButtons config={config} ioMgr={this.props.ioMgr} />;
     } else if (config.componentType == "TakePhoto") {
-      return (
-        <TakePhoto config={config} ioMgr={this.props.ioMgr} />
-      );
+      return <TakePhoto config={config} ioMgr={this.props.ioMgr} />;
     } else if (config.componentType == "ImageComponent") {
-      return (
-        <ImageComponent config={config} />
-      );
+      return <ImageComponent config={config} />;
     } else {
-      return (<TextButton config={config} ioMgr={this.props.ioMgr} />);
+      return <TextButton config={config} ioMgr={this.props.ioMgr} />;
     }
   }
 
   render() {
-    const components = [];
-    components.push(
-      this.createComponent({
+    const components = [
+      {
         componentType: "ScaleButtons",
         type: "hunger",
         min: "1",
         max: "5",
-        xsGridWidth: 12,
-      })
-    ); 
-    components.push(
-      this.createComponent({
+        xsGridWidth: 12
+      },
+      {
         componentType: "CirclePuppy",
         descriptionPrompt: true,
         type: "food",
         imagePath: "img/hunger.png",
         xsGridWidth: 4
-      })
-    );
-    components.push(
-      this.createComponent({
+      },
+      {
         componentType: "CirclePuppy",
         imagePath: "img/water.png",
         xsGridWidth: 4,
         type: "water"
-      })
-    );
-    components.push(
-      this.createComponent({
+      },
+      {
         componentType: "CirclePuppy",
         imagePath: "img/sleep.png",
         xsGridWidth: 4,
         type: "sleep"
-      })
-    );
-    components.push(
-      this.createComponent({
+      },
+      {
         componentType: "TakePhoto",
-        xsGridWidth: 12,
-      })
-    ); 
-    components.push(
-      this.createComponent({
+        xsGridWidth: 12
+      },
+      {
         componentType: "TextButton",
         xsGridWidth: 3,
         text: "Earl Tea",
         description: "Earl Grey Tea Soy creamer",
         type: "food"
-      })
-    );
-    components.push(
-      this.createComponent({
+      },
+      {
         componentType: "ImageComponent",
         xsGridWidth: 12,
-        imagePath: "img/sick.png",
-      }));
-          components.push(
-      this.createComponent({
+        imagePath: "img/sick.png"
+      },
+      {
         componentType: "TextButton",
         xsGridWidth: 4,
         text: "Sumatriptan",
         description: "Sumatriptan",
         type: "medicine"
-      })
-    );
-    components.push(
-      this.createComponent({
+      },
+      {
         componentType: "TextButton",
         xsGridWidth: 4,
         text: "Ibuprofen",
         description: "Ibuprofen",
         type: "medicine"
-      })
-    );
-    components.push(
-      this.createComponent({
+      },
+      {
         componentType: "TextButton",
         xsGridWidth: 4,
         text: "Acetamenophin",
         description: "Acetamenophin",
         type: "medicine"
-      }));
-    components.push(
-      this.createComponent({
+      },
+      {
         componentType: "ScaleButtons",
         type: "feeling",
         min: "1",
         max: "5",
         xsGridWidth: 12,
         descriptionPrompt: true
-      })
-    ); 
+      }
+    ];
 
     return (
       <div>
         <h1>Actions</h1>
-        <Grid container spacing={8} justify="space-around"className="actionsGridContainer">
+        <Grid
+          container
+          spacing={8}
+          justify="space-around"
+          className="actionsGridContainer"
+        >
           {components.map(component => {
-            return component;
+            return this.createComponent(component);
           })}
         </Grid>
       </div>
@@ -147,7 +125,7 @@ class ActionView extends React.Component {
 }
 
 ActionView.propTypes = {
-  ioMgr: PropTypes.object.isRequired,
+  ioMgr: PropTypes.object.isRequired
 };
 
 module.exports = ActionView;
