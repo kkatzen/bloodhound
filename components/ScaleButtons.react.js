@@ -8,21 +8,40 @@ class ScaleButtons extends React.Component {
     super(props);
   }
 
+  writeEvent(i) {
+    console.log(this.props.config);
+    console.log(i);
+    let writtenEvent = { type: this.props.config.type, level: i};
+    if (this.props.config.descriptionPrompt) {
+      writtenEvent["description"] = prompt("Description");
+    }
+    if (this.props.config.dev == true) {
+      console.log(writtenEvent);      
+    }else {
+      this.props.ioMgr.writeEvent(writtenEvent);
+    }
+  }
+
   render() {
-    const { onClick, min, max } = this.props;
+    console.log("SCALED BUTTONS~!!!!!!!");
+    console.log("this.props", this.props);
+    const { min, max } = this.props.config;
     if (min >= max) {
       throw new Error("You are dumb, learn to count!!");
     }
     const buttons = [];
     for (let i = min; i <= max; i++) {
       buttons.push(
-        <Button variant="outlined" size="small" color="primary"  key={i} onClick={() => onClick(i)}>
+        <Button variant="outlined" size="small" color="primary" 
+                key={i} onClick={() => this.writeEvent(i)}>
           {i}
         </Button>
       );
     }
 
-    return (<Grid item xs={this.props.xsGridWidth} sm={this.props.xsGridWidth} className="scaleButtonGridItem">
+    return (
+      <Grid item xs={this.props.config.xsGridWidth} sm={this.props.config.xsGridWidth}
+                 className="scaleButtonGridItem">
       {buttons}
     </Grid>)
     ;
@@ -30,10 +49,8 @@ class ScaleButtons extends React.Component {
 }
 
 ScaleButtons.propTypes = {
-  onClick: PropTypes.func.isRequired,
-  min: PropTypes.number,
-  max: PropTypes.number,
-  xsGridWidth: PropTypes.number
+  ioMgr: PropTypes.object,
+  config: PropTypes.object
 };
 
 module.exports = ScaleButtons;

@@ -48,7 +48,11 @@ gridWidth: <>
           onClick={() => console.log(config.text)}
           xsGridWidth={config.xsGridWidth} />
       );
-    } else if (config.componentType == "ScaleButtons") {
+    }  else {
+      return (<TextButton config={config} />);
+    }
+    /*
+    else if (config.componentType == "ScaleButtons") {
       return (
         <ScaleButtons
           onClick={i => console.log(config.text + i)}
@@ -57,9 +61,7 @@ gridWidth: <>
           xsGridWidth={4}
           xsGridWidth={config.xsGridWidth} />
       );
-    } else {
-      return (<TextButton config={config} />);
-    }
+    }*/
   }
 
   render() {
@@ -76,16 +78,6 @@ gridWidth: <>
 
 */
     const components = [];
-    components.push(
-      this.createComponent({
-        componentType: "ScaleButtons",
-        text: "hunger",
-        min: "1",
-        max: "5",
-        xsGridWidth: 12,
-        dev: true
-      })
-    ); 
     components.push(
       this.createComponent({
         componentType: "TextButton",
