@@ -88,25 +88,32 @@ class LogView extends React.Component {
   static getEventText(eventData) {
     console.log("eventData",eventData);
 
-    switch (Object.keys(eventData)[0]) {
+    let newFormat = eventData.type  ? true : false;
+    let eventType = newFormat ? eventData.type : Object.keys(eventData)[0];
+    let eventBody = newFormat ? eventData : eventData[eventType];
+    console.log("eventBody",eventBody);
+
+    switch (eventType) {
       case "hunger":
-        return "Hunger level " + eventData["hunger"];
+        let hungerValue = newFormat ? eventBody.level : eventBody;
+        return "Hunger level " + hungerValue;
       case "water":
         return "Drank a cup of water";
       case "medicine":
-        return "Took " + eventData["medicine"];
+        let medicineValue = newFormat ? eventBody.level : eventBody;
+        return "Took " + medicineValue;
       case "sleep":
         return "Went to bed / Woke up";
       case "food":
-        var text = "Ate " + eventData["food"]["description"];
-        if (eventData["food"]["photo"]) {
-          text += " " + eventData["food"]["photo"];
+        var text = "Ate " + eventBody.description;
+        if (eventBody["photo"]) {
+          text += " " + eventBody["photo"];
         }
         return text;
       case "feeling":
-        var text = "Feeling bad " + eventData["feeling"]["level"];
-        if (eventData["feeling"]["description"]) {
-          text += ' "' + eventData["feeling"]["description"] + '"';
+        var text = "Feeling bad " + eventBody.level;
+        if (eventBody["description"]) {
+          text += ' "' + eventBody["description"] + '"';
         }
         return text;
       default:

@@ -29,6 +29,8 @@ class IOMgr {
   }
 
   writeEvent(event) {
+    console.log("IOMgr writeEvent");
+    console.log(event);
     const timestamp = new Date().getTime();
 
     // TODO: Maybe don't dispatch this locally.

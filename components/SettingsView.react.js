@@ -82,7 +82,8 @@ gridWidth: <>
         text: "hunger",
         min: "1",
         max: "5",
-        xsGridWidth: 12
+        xsGridWidth: 12,
+        dev: true
       })
     ); 
     components.push(
@@ -91,7 +92,8 @@ gridWidth: <>
         type: "photo",
         xsGridWidth: 2,
         iconName: "camera",
-        shape: "circle"
+        shape: "circle",
+        dev: true
       })
     );
     components.push(
@@ -100,7 +102,8 @@ gridWidth: <>
         type: "photo",
         xsGridWidth: 1,
         iconName: "camera",
-        shape: "circle"
+        shape: "circle",
+        dev: true
       })
     );
     components.push(
@@ -109,7 +112,8 @@ gridWidth: <>
         type: "photo",
         xsGridWidth: 1,
         iconName: "camera",
-        shape: "circle"
+        shape: "circle",
+        dev: true
       })
     );
     components.push(
@@ -119,7 +123,8 @@ gridWidth: <>
         xsGridWidth: 2,
         iconName: "pets",
         shape: "circle",
-        description: true
+        descriptionPrompt: true,
+        dev: true
       })
     );
     components.push(
@@ -128,7 +133,8 @@ gridWidth: <>
         text: "android",
         pet: "pet",
         xsGridWidth: 4,
-        iconName: "android"
+        iconName: "android",
+        dev: true
       })
     );
     components.push(
@@ -138,7 +144,8 @@ gridWidth: <>
         pet: "pet",
         xsGridWidth: 3,
         iconName: "android",
-        shape: "bigCircle"
+        shape: "bigCircle",
+        dev: true
       })
     );
     components.push(
@@ -148,7 +155,8 @@ gridWidth: <>
         pet: "pet",
         xsGridWidth: 3,
         iconName: "android",
-        shape: "bigCircle"
+        shape: "bigCircle",
+        dev: true
       })
     ); 
     components.push(
@@ -158,7 +166,8 @@ gridWidth: <>
         pet: "pet",
         xsGridWidth: 3,
         iconName: "android",
-        shape: "bigCircle"
+        shape: "bigCircle",
+        dev: true
       })
     );
     components.push(
@@ -168,7 +177,8 @@ gridWidth: <>
         pet: "pet",
         xsGridWidth: 3,
         iconName: "android",
-        shape: "bigCircle"
+        shape: "bigCircle",
+        dev: true
       })
     );
     components.push(
@@ -177,7 +187,8 @@ gridWidth: <>
         type: "photo",
         xsGridWidth: 12,
         iconName: "camera",
-        text: "AFSHEEN"
+        text: "AFSHEEN",
+        dev: true
       })
     );
     console.log("components", components);

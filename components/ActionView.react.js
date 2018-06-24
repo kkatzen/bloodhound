@@ -5,6 +5,7 @@ const CirclePuppy = require("../components/CirclePuppy.react.js");
 const ScaleButtons = require("../components/ScaleButtons.react.js");
 const PeriodView = require("../components/PeriodView.react.js");
 import Grid from "@material-ui/core/Grid";
+const TextButton = require("../components/TextButton.react.js");
 
 class ActionView extends React.Component {
   constructor(props) {
@@ -47,7 +48,40 @@ class ActionView extends React.Component {
     this.props.ioMgr.writeEvent({ food: foodEvent });
   }
 
+  createComponent(config) {
+    if (config.componentType == "CirclePuppy") {
+      return (
+        <CirclePuppy
+          imagePath={config.imagePath}
+          onClick={() => console.log(config.text)}
+          xsGridWidth={config.xsGridWidth} />
+      );
+    } else if (config.componentType == "ScaleButtons") {
+      return (
+        <ScaleButtons
+          onClick={i => console.log(config.text + i)}
+          min={parseInt(config.min)}
+          max={parseInt(config.max)}
+          xsGridWidth={4}
+          xsGridWidth={config.xsGridWidth} />
+      );
+    } else {
+      return (<TextButton config={config} ioMgr={this.props.ioMgr} />);
+    }
+  }
+
   render() {
+    const components = [];
+    components.push(
+      this.createComponent({
+        componentType: "TextButton",
+        xsGridWidth: 2,
+        text: "Earl Grey Tea",
+        description: "Earl Grey Tea Soy creamer",
+        type: "food"
+      })
+    );
+
     return (
       <div>
         <h1>Actions</h1>
@@ -76,6 +110,15 @@ class ActionView extends React.Component {
               </button>
           </Grid>
         </Grid>
+        <Grid
+          container
+          spacing={8}
+          justify="space-around"
+        >
+        {components.map(component => {
+          return component;
+        })}
+      </Grid>
       </div>
     );
   }

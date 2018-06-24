@@ -10,11 +10,18 @@ class TextButton extends React.Component {
   }
 
   writeEvent() {
+    console.log(this.props.config);
     let writtenEvent = { type: this.props.config.type };
-    if (this.props.config.description) {
+    if (this.props.config.descriptionPrompt) {
       writtenEvent["description"] = prompt("Description");
+    } else if (this.props.config.description) {
+      writtenEvent["description"] = this.props.config.description;
     }
-    console.log(writtenEvent);
+    if (this.props.config.dev == true) {
+      console.log(writtenEvent);      
+    }else {
+      this.props.ioMgr.writeEvent(writtenEvent);
+    }
   }
 
   renderButton() {
@@ -72,6 +79,7 @@ class TextButton extends React.Component {
 }
 
 TextButton.propTypes = {
+  ioMgr: PropTypes.object,
   config: PropTypes.object
 };
 
