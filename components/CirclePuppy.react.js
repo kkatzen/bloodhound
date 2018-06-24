@@ -7,11 +7,27 @@ class CirclePuppy extends React.Component {
     super(props);
   }
 
+  writeEvent() {
+    console.log(this.props.config);
+    let writtenEvent = { type: this.props.config.type };
+    if (this.props.config.descriptionPrompt) {
+      writtenEvent["description"] = prompt("Description");
+    } else if (this.props.config.description) {
+      writtenEvent["description"] = this.props.config.description;
+    }
+    if (this.props.config.dev == true) {
+      console.log(writtenEvent);      
+    }else {
+      this.props.ioMgr.writeEvent(writtenEvent);
+    }
+  }
+
   render() {
     return (
-      <Grid item xs={3} sm={3} className="circlePuppyGridItem">
-        <button onClick={this.props.onClick}>
-          <img src={this.props.imagePath} />
+      <Grid item xs={this.props.config.xsGridWidth} sm={this.props.config.xsGridWidth}
+            className="circlePuppyGridItem">
+        <button onClick={() => this.writeEvent()}>
+          <img src={this.props.config.imagePath} />
         </button>
       </Grid>
     );
@@ -19,8 +35,8 @@ class CirclePuppy extends React.Component {
 }
 
 CirclePuppy.propTypes = {
-  onClick: PropTypes.func.isRequired,
-  imagePath: PropTypes.string,
+  ioMgr: PropTypes.object,
+  config: PropTypes.object
 };
 
 module.exports = CirclePuppy;

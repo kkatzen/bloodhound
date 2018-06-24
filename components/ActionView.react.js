@@ -51,10 +51,7 @@ class ActionView extends React.Component {
   createComponent(config) {
     if (config.componentType == "CirclePuppy") {
       return (
-        <CirclePuppy
-          imagePath={config.imagePath}
-          onClick={() => console.log(config.text)}
-          xsGridWidth={config.xsGridWidth} />
+        <CirclePuppy config={config} ioMgr={this.props.ioMgr}/>
       );
     } else if (config.componentType == "ScaleButtons") {
       return (
@@ -74,6 +71,31 @@ class ActionView extends React.Component {
     const components = [];
     components.push(
       this.createComponent({
+        componentType: "CirclePuppy",
+        descriptionPrompt: true,
+        type: "food",
+        imagePath: "img/hunger.png",
+        xsGridWidth: 4
+      })
+    );
+    components.push(
+      this.createComponent({
+        componentType: "CirclePuppy",
+        imagePath: "img/water.png",
+        xsGridWidth: 4,
+        type: "water"
+      })
+    );
+    components.push(
+      this.createComponent({
+        componentType: "CirclePuppy",
+        imagePath: "img/sleep.png",
+        xsGridWidth: 4,
+        type: "sleep"
+      })
+    );
+    components.push(
+      this.createComponent({
         componentType: "TextButton",
         xsGridWidth: 2,
         text: "Earl Grey Tea",
@@ -86,9 +108,9 @@ class ActionView extends React.Component {
       <div>
         <h1>Actions</h1>
         <Grid container spacing={8} justify="space-around"className="actionsGridContainer">
-          <CirclePuppy imagePath="img/hunger.png" onClick={() => this.writeFood()} />
-          <CirclePuppy imagePath="img/water.png" onClick={() => this.writeWater()} />
-          <CirclePuppy imagePath="img/sleep.png" onClick={() => this.writeSleep()} />
+          {components.map(component => {
+            return component;
+          })}
           <ScaleButtons onClick={(i) => this.writeHunger(i)} min={0} max={5} xsGridWidth={12}/>
           <Grid item xs={12} sm={6}>
               <TakePhoto ioMgr={this.props.ioMgr} />
@@ -110,15 +132,6 @@ class ActionView extends React.Component {
               </button>
           </Grid>
         </Grid>
-        <Grid
-          container
-          spacing={8}
-          justify="space-around"
-        >
-        {components.map(component => {
-          return component;
-        })}
-      </Grid>
       </div>
     );
   }
