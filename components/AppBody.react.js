@@ -7,6 +7,9 @@ const AppViewStore = require('../alt/stores/AppViewStore.js');
 const {AppView} = require('../alt/actions/AppViewActions.js');
 const PeriodView = require('./PeriodView.react.js');
 const Settings = require('./SettingsView.react.js');
+const SessionStore = require("../alt/stores/SessionStore.js");
+import Button from "@material-ui/core/Button";
+import Icon from "@material-ui/core/Icon";
 
 class AppBody extends React.Component {
   constructor(props) {
@@ -14,15 +17,19 @@ class AppBody extends React.Component {
   }
 
   static getStores() {
-    return [AppViewStore];
+    return [AppViewStore, SessionStore];
   }
 
   static getPropsFromStores() {
     return AppViewStore.getState();
   }
 
+  static getPropsFromSessionStore() {
+    return SessionStore.getState();
+  }
+
   render() {
-    let content = null;
+    let content;
     console.log(this.props);
     switch (this.props.currentView) {
       case AppView.ACTIONS:
@@ -38,8 +45,11 @@ class AppBody extends React.Component {
         content = (<Settings ioMgr={this.props.ioMgr} />);
         break;
     }
+    const login = (<div id="signout">
+        {SessionStore.state.user ? <div>{SessionStore.state.user.email}<Button onClick={()=> api.actions.signOut()}>Sign out</Button></div> : <Button onClick={()=> api.actions.logIn()}>Login</Button>}
+        </div>);
 
-    return content;
+    return (<div>{login}{content}</div>);
   }
 }
 

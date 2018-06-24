@@ -12,6 +12,7 @@ class SessionStore {
     this.state = {
       user: null,
       lastItemLoaded: 0,
+      componentConfig: null,
     };
   }
 

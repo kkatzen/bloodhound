@@ -12,21 +12,27 @@ const SessionStore = require("../alt/stores/SessionStore.js");
 class ActionView extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {currentConfig: JSON.parse("{\"components\": [{  \"componentType\": \"ImageComponent\", \"xsGridWidth\": \"12\", \"imagePath\": \"img/sick.png\"}]}")};
+    this.state = {
+      currentConfig: JSON.parse(
+        '{"components": [{  "componentType": "ImageComponent", "xsGridWidth": "12", "imagePath": "img/sick.png"}]}'
+      )
+    };
 
     setTimeout(() => {
-      var configRef = firebase
-        .database()
-        .ref("configs/" + SessionStore.state.user.uid + "");
-    configRef.on("value", snapshot => this.getCurrentConfig(snapshot));
-    }, 1000);
+      if (SessionStore.state.user) {
+        var configRef = firebase
+          .database()
+          .ref("configs/" + SessionStore.state.user.uid + "");
+        configRef.on("value", snapshot => this.getCurrentConfig(snapshot));
+      }
+    }, 1300);
   }
 
   getCurrentConfig(snapshot) {
-    if(snapshot.val()) { // User has never set config
-    this.setState({currentConfig: JSON.parse(snapshot.val())});
-    console.log("SET this.state.currentConfig", this.state.currentConfig);
-    
+    if (snapshot.val()) {
+      // User has never set config
+      this.setState({ currentConfig: JSON.parse(snapshot.val()) });
+      console.log("SET this.state.currentConfig", this.state.currentConfig);
     }
   }
 
@@ -45,6 +51,30 @@ class ActionView extends React.Component {
   }
 
   render() {
+    return (
+      <div>
+        <h1>Actions</h1>
+        <Grid
+          container
+          spacing={8}
+          justify="space-around"
+          className="actionsGridContainer"
+        >
+          {this.state.currentConfig.components.map(component => {
+            return this.createComponent(component);
+          })}
+        </Grid>
+      </div>
+    );
+  }
+}
+
+ActionView.propTypes = {
+  ioMgr: PropTypes.object.isRequired
+};
+
+/*
+
     const components = [
       {
         componentType: "ScaleButtons",
@@ -119,28 +149,6 @@ class ActionView extends React.Component {
       }
     ];
 
-    console.log("this.state.currentConfig", this.state.currentConfig);
-
-    return (
-      <div>
-        <h1>Actions</h1>
-        <Grid
-          container
-          spacing={8}
-          justify="space-around"
-          className="actionsGridContainer"
-        >
-          {this.state.currentConfig.components.map(component => {
-            return this.createComponent(component);
-          })}
-        </Grid>
-      </div>
-    );
-  }
-}
-
-ActionView.propTypes = {
-  ioMgr: PropTypes.object.isRequired
-};
+*/
 
 module.exports = ActionView;

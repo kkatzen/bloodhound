@@ -19,11 +19,8 @@ module.exports = function() {
     });
 
   firebase.auth().onAuthStateChanged(function(loggedInUser) {
-    if (!loggedInUser) {
-      document.getElementById("username").innerHTML = "Please login";
-      console.log("NEED TO LOG IN");
-    } else {
-      setUser(loggedInUser);
+    if (loggedInUser) {
+      SessionActions.setUser(loggedInUser);
       console.log("ALREADY LOGGED IN");
     }
   });
@@ -32,10 +29,5 @@ module.exports = function() {
 
 
 function setUser(newUser) {
-  console.log(newUser);
   SessionActions.setUser(newUser);
-
-  document.getElementById("username").innerHTML = newUser.email;
-  // var myEventsRef = firebase.database().ref('events/' + newUser.uid + "").limitToLast(5);
-  // myEventsRef.on('value', (snapshot) => processSnapshot(snapshot));
 }
