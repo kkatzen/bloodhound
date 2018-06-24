@@ -100,7 +100,7 @@ class LogView extends React.Component {
       case "water":
         return "Drank a cup of water";
       case "medicine":
-        let medicineValue = newFormat ? eventBody.level : eventBody;
+        let medicineValue = newFormat ? eventBody.description : eventBody;
         return "Took " + medicineValue;
       case "sleep":
         return "Went to bed / Woke up";

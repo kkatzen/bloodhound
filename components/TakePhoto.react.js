@@ -2,6 +2,7 @@ const React = require("react");
 
 const DOMUtils = require("../utils/DOMUtils.js");
 const PropTypes = require("prop-types");
+import Grid from "@material-ui/core/Grid";
 
 const blobToDataURL = require("../utils/blobToDataURL.js");
 
@@ -13,12 +14,12 @@ class TakePhoto extends React.Component {
 
   render() {
     return (
-      <div>
+      <Grid item xs={this.props.config.xsGridWidth} sm={this.props.config.xsGridWidth}>
         <button className="takePhotoButton" onClick={() => this._takePhoto()}>
           <img src="../img/camera.jpg" className="fullRowHeight" />
           <div id="lastPhotoPreviewContainer" />
         </button>
-      </div>
+      </Grid>
     );
   }
 
@@ -59,6 +60,7 @@ class TakePhoto extends React.Component {
 
 TakePhoto.propTypes = {
   ioMgr: PropTypes.object.isRequired,
+  config: PropTypes.object
 };
 
 module.exports = TakePhoto;

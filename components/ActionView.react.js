@@ -25,6 +25,10 @@ class ActionView extends React.Component {
       return (
         <ScaleButtons config={config} ioMgr={this.props.ioMgr} />
       );
+    } else if (config.componentType == "TakePhoto") {
+      return (
+        <TakePhoto config={config} ioMgr={this.props.ioMgr} />
+      );
     } else {
       return (<TextButton config={config} ioMgr={this.props.ioMgr} />);
     }
@@ -78,14 +82,46 @@ class ActionView extends React.Component {
     ); 
     components.push(
       this.createComponent({
+        componentType: "TakePhoto",
+        xsGridWidth: 12,
+      })
+    ); 
+    components.push(
+      this.createComponent({
         componentType: "TextButton",
-        xsGridWidth: 2,
-        text: "Earl Grey Tea",
+        xsGridWidth: 3,
+        text: "Earl Tea",
         description: "Earl Grey Tea Soy creamer",
         type: "food"
       })
     );
-
+    components.push(
+      this.createComponent({
+        componentType: "TextButton",
+        xsGridWidth: 3,
+        text: "Sumatriptan",
+        description: "Sumatriptan",
+        type: "medicine"
+      })
+    );
+    components.push(
+      this.createComponent({
+        componentType: "TextButton",
+        xsGridWidth: 3,
+        text: "Ibuprofen",
+        description: "Ibuprofen",
+        type: "medicine"
+      })
+    );
+    components.push(
+      this.createComponent({
+        componentType: "TextButton",
+        xsGridWidth: 3,
+        text: "Acetamenophin",
+        description: "Acetamenophin",
+        type: "medicine"
+      })
+    );
     return (
       <div>
         <h1>Actions</h1>
@@ -93,23 +129,8 @@ class ActionView extends React.Component {
           {components.map(component => {
             return component;
           })}
-          <Grid item xs={12} sm={6}>
-              <TakePhoto ioMgr={this.props.ioMgr} />
-          </Grid>
           <Grid item xs={6} sm={6}>
               <img src="img/sick.png" className="fullRowHeight" />
-          </Grid>
-          <Grid item xs={6} sm={6}>
-              <img src="img/medicine.png" className="fullRowHeight" />
-              <button onClick={() => this.writeMedicine("sumatriptan")}>
-                Sumatriptan
-              </button>
-              <button onClick={() => this.writeMedicine("ibuprofen")}>
-                Ibuprofen
-              </button>
-              <button onClick={() => this.writeMedicine("acetamenophin")}>
-                Acetamenophin
-              </button>
           </Grid>
         </Grid>
       </div>
