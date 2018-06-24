@@ -23,8 +23,11 @@ class ActionView extends React.Component {
   }
 
   getCurrentConfig(snapshot) {
+    if(snapshot.val()) { // User has never set config
     this.setState({currentConfig: JSON.parse(snapshot.val())});
     console.log("SET this.state.currentConfig", this.state.currentConfig);
+    
+    }
   }
 
   createComponent(config) {
@@ -116,10 +119,8 @@ class ActionView extends React.Component {
       }
     ];
 
-console.log("this.state.currentConfig", this.state.currentConfig);
-console.log("typeof his.state.currentConfig", typeof this.state.currentConfig);
-console.log("typeof compnoents", typeof components);
-//console.log(JSON.parse(this.state.currentConfig));
+    console.log("this.state.currentConfig", this.state.currentConfig);
+
     return (
       <div>
         <h1>Actions</h1>
