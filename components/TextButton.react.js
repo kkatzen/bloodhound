@@ -34,7 +34,7 @@ class TextButton extends React.Component {
           onClick={() => this.writeEvent()}
           className="textButtonButton"
         >
-          <Icon className="textButtonIcon">{this.props.config.iconName}</Icon>
+          {this.props.config.iconName && <Icon className="textButtonIcon">{this.props.config.iconName}</Icon>}
         </Button>
       );
     } else if (this.props.config.shape == "bigCircle") {
@@ -45,7 +45,7 @@ class TextButton extends React.Component {
           onClick={() => this.writeEvent()}
           className="textButtonButton"
         >
-          <Icon className="textButtonIcon">{this.props.config.iconName}</Icon>
+          {this.props.config.iconName && <Icon className="textButtonIcon">{this.props.config.iconName}</Icon>}
         </Button>
       );
     } else {
@@ -57,7 +57,7 @@ class TextButton extends React.Component {
           onClick={() => this.writeEvent()}
           className="textButtonButton"
         >
-          <Icon className="textButtonIcon">{this.props.config.iconName}</Icon>
+          {this.props.config.iconName && <Icon className="textButtonIcon">{this.props.config.iconName}</Icon>}
           {this.props.config.text}
         </Button>
       );

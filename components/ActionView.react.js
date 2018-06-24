@@ -2,6 +2,7 @@ const React = require("react");
 const PropTypes = require("prop-types");
 const TakePhoto = require("../components/TakePhoto.react.js");
 const CirclePuppy = require("../components/CirclePuppy.react.js");
+const ImageComponent = require("../components/ImageComponent.react.js");
 const ScaleButtons = require("../components/ScaleButtons.react.js");
 const PeriodView = require("../components/PeriodView.react.js");
 import Grid from "@material-ui/core/Grid";
@@ -28,6 +29,10 @@ class ActionView extends React.Component {
     } else if (config.componentType == "TakePhoto") {
       return (
         <TakePhoto config={config} ioMgr={this.props.ioMgr} />
+      );
+    } else if (config.componentType == "ImageComponent") {
+      return (
+        <ImageComponent config={config} />
       );
     } else {
       return (<TextButton config={config} ioMgr={this.props.ioMgr} />);
@@ -72,16 +77,6 @@ class ActionView extends React.Component {
     );
     components.push(
       this.createComponent({
-        componentType: "ScaleButtons",
-        type: "feeling",
-        min: "1",
-        max: "5",
-        xsGridWidth: 12,
-        descriptionPrompt: true
-      })
-    ); 
-    components.push(
-      this.createComponent({
         componentType: "TakePhoto",
         xsGridWidth: 12,
       })
@@ -97,8 +92,14 @@ class ActionView extends React.Component {
     );
     components.push(
       this.createComponent({
+        componentType: "ImageComponent",
+        xsGridWidth: 12,
+        imagePath: "img/sick.png",
+      }));
+          components.push(
+      this.createComponent({
         componentType: "TextButton",
-        xsGridWidth: 3,
+        xsGridWidth: 4,
         text: "Sumatriptan",
         description: "Sumatriptan",
         type: "medicine"
@@ -107,7 +108,7 @@ class ActionView extends React.Component {
     components.push(
       this.createComponent({
         componentType: "TextButton",
-        xsGridWidth: 3,
+        xsGridWidth: 4,
         text: "Ibuprofen",
         description: "Ibuprofen",
         type: "medicine"
@@ -116,12 +117,22 @@ class ActionView extends React.Component {
     components.push(
       this.createComponent({
         componentType: "TextButton",
-        xsGridWidth: 3,
+        xsGridWidth: 4,
         text: "Acetamenophin",
         description: "Acetamenophin",
         type: "medicine"
+      }));
+    components.push(
+      this.createComponent({
+        componentType: "ScaleButtons",
+        type: "feeling",
+        min: "1",
+        max: "5",
+        xsGridWidth: 12,
+        descriptionPrompt: true
       })
-    );
+    ); 
+
     return (
       <div>
         <h1>Actions</h1>
@@ -129,9 +140,6 @@ class ActionView extends React.Component {
           {components.map(component => {
             return component;
           })}
-          <Grid item xs={6} sm={6}>
-              <img src="img/sick.png" className="fullRowHeight" />
-          </Grid>
         </Grid>
       </div>
     );
