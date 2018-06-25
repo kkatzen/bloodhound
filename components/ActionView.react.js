@@ -17,8 +17,10 @@ class ActionView extends React.Component {
         '{"components": [{  "componentType": "ImageComponent", "xsGridWidth": "12", "imagePath": "img/sick.png"}]}'
       )
     };
-
+    console.log("SessionStore.state.componentConfig", SessionStore.state.componentConfig);
     setTimeout(() => {
+
+    console.log("SessionStore.state.componentConfig", SessionStore.state.componentConfig);
       if (SessionStore.state.user) {
         var configRef = firebase
           .database()

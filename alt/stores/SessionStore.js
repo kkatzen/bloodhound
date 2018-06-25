@@ -7,6 +7,7 @@ class SessionStore {
       _setUser: SessionActions.setUser,
       _unsetUser: SessionActions.unsetUser,
       _setLastItemLoaded: SessionActions.setLastItemLoaded,
+      _setComponentConfig: SessionActions.setComponentConfig,
     });
 
     this.state = {
@@ -17,11 +18,11 @@ class SessionStore {
   }
 
   _setUser(action) {
-    this.setState({user: action.user, lastItemLoaded: 0});
+    this.setState({user: action.user, lastItemLoaded: 0, componentConfig: null});
   }
 
   _unsetUser(action) {
-    this.setState({user: null, lastItemLoaded: 0});
+    this.setState({user: null, lastItemLoaded: 0, componentConfig: null});
   }
 
   _setLastItemLoaded(action) {
@@ -29,6 +30,13 @@ class SessionStore {
       ...this.state,
       ...action,
     });
+  }
+
+  _setComponentConfig(newComponentConfig) {
+    console.log("_setComponentConfig in SessionStore", newComponentConfig);
+    console.log(this.state.user);
+    this.setState({user: this.state.user, lastItemLoaded: this.state.lastItemLoaded, componentConfig: newComponentConfig});
+    console.log(this.state.user);
   }
 }
 

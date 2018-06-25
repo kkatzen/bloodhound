@@ -10,6 +10,10 @@ const Actions = {
   setLastItemLoaded: function(lastItemLoaded) {
     return {lastItemLoaded};
   },
+  setComponentConfig: function(componentConfig) {
+    console.log("setComponentConfig in SessionActions", componentConfig);
+    return {componentConfig};
+  },
 };
 
 module.exports = alt.createActions(Actions);

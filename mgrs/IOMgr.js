@@ -59,16 +59,35 @@ class IOMgr {
       .remove();
   }
 
+  setComponentConfig(newValue) {
+    try {
+        JSON.parse(newValue);
+    firebase
+      .database()
+      .ref("configs/" + SessionStore.state.user.uid)
+      .set(newValue);
+      SessionActions.setComponentConfig(newValue);
+    }
+    catch(err) {
+        alert("INVALID JSON: " + err.message)
+    }
+  }
+
+
   _onChange(state) {
+    console.log("_onChange");
     if (this.user != SessionStore.state.user) {
       this._onUserChange();
     }
   }
 
   _onUserChange(state) {
+    console.log("_onUserChange");
       this.user = SessionStore.state.user;
       if (this.user != null) {
         this._getInitialData();
+      } else { 
+        SessionActions.setComponentConfig.defer(null);
       }
   }
 
@@ -96,12 +115,30 @@ class IOMgr {
   }
 
   _getInitialData() {
+    const configRef = firebase
+      .database()
+      .ref("configs/" + this.user.uid + "");
+    configRef.on("value", snapshot => this._processConfigSnapshot(snapshot));
+
     const myEventsRef = firebase
       .database()
       .ref("events/" + this.user.uid + "")
       .limitToLast(5)
       .once("value")
       .then(snapshot => this._processSnapshot(snapshot));
+  }
+
+  _processConfigSnapshot(snapshot) {
+    console.log("_processConfigSnapshot snapshot", snapshot);
+    // We need the defer here because we cannot dispatch an new
+    // action while the previous one is still being processed.
+
+    console.log(snapshot.val());  
+    if (snapshot.val()) {
+      SessionActions.setComponentConfig.defer(JSON.parse(snapshot.val()));
+    } else {
+      SessionActions.setComponentConfig.defer(null);
+    }
   }
 }
 
