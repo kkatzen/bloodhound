@@ -10,6 +10,7 @@ class IOMgr {
   constructor() {
     this.events = {};
     this.user = null;
+    console.log("IOMgr constructor....", SessionStore);
     SessionStore.listen((state) => this._onChange());
   }
 
@@ -86,7 +87,7 @@ class IOMgr {
       this.user = SessionStore.state.user;
       if (this.user != null) {
         this._getInitialData();
-      } else { 
+      } else {
         SessionActions.setComponentConfig.defer(null);
       }
   }
@@ -115,10 +116,13 @@ class IOMgr {
   }
 
   _getInitialData() {
-    const configRef = firebase
-      .database()
-      .ref("configs/" + this.user.uid + "");
-    configRef.on("value", snapshot => this._processConfigSnapshot(snapshot));
+    console.log("_getInitialData");
+    if (!SessionStore.state.componentConfig) {
+      const configRef = firebase
+        .database()
+        .ref("configs/" + this.user.uid + "");
+      configRef.on("value", snapshot => this._processConfigSnapshot(snapshot));
+    }
 
     const myEventsRef = firebase
       .database()
@@ -130,9 +134,8 @@ class IOMgr {
 
   _processConfigSnapshot(snapshot) {
     console.log("_processConfigSnapshot snapshot", snapshot);
-    // We need the defer here because we cannot dispatch an new
+    // We need the defer here because we cannot dispatch a new
     // action while the previous one is still being processed.
-
     console.log(snapshot.val());  
     if (snapshot.val()) {
       SessionActions.setComponentConfig.defer(JSON.parse(snapshot.val()));

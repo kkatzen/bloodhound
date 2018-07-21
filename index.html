@@ -5,7 +5,33 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Tell the browser it's a PWA -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <!-- Tell iOS it's a PWA -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
     <title>Bloodhound Tracker</title>
+    <style type="text/css">
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: sans-serif;
+      }
+      .navbar {
+        background-color: #01C8E5;
+        text-align: center;
+      }
+      .navbar a {
+        display: inline-block;
+        padding: 10px;
+        color: #fff;
+        text-decoration: none;
+      }
+      .page-info {
+        text-align: center;
+        font-weight: bold;
+      }
+    </style>
     <link rel="stylesheet" type="text/css" href="reset.css?v=1.7" media="all">
     <link rel="stylesheet" type="text/css" href="style.css?v=1.9.16" media="all">
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -21,8 +47,35 @@
   </script>
   <script src="api.js"></script>
   <script src="bundle.js"></script>
+  <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register('worker.js').then(function(registration) {
+            console.log('Worker registration successful', registration.scope);
+          }, function(err) {
+            console.log('Worker registration failed', err);
+          }).catch(function(err) {
+            console.log(err);
+          });
+        });
+      } else {
+        console.log('Service Worker is not supported by browser.');
+      }
+    </script>
+    <!--
+    <div id="root">
+      <div class="navbar">
+        <a href="/">Feed</a>
+      </div>
+      <p class="page-info">
+        Loading an awesome app...
+      </p>
+    </div>
+  -->
   <div id="actionView"></div>
   <div id="periodTable"></div>
   <div id="drawer"><div>
   </body>
+  <!-- Prompt a message in the browser if users disabled JS -->
+  <noscript>Your browser does not support JavaScript!</noscript>
 </html>

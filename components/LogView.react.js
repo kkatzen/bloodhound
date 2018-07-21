@@ -18,6 +18,7 @@ import Button from "@material-ui/core/Button";
 class LogView extends React.Component {
   constructor(props) {
     super(props);
+    console.log("PROPS!!! this.props", this.props);
   }
 
   static getStores() {

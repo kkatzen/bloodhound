@@ -8,27 +8,55 @@ const PeriodView = require("../components/PeriodView.react.js");
 const TextButton = require("../components/TextButton.react.js");
 import Grid from "@material-ui/core/Grid";
 const SessionStore = require("../alt/stores/SessionStore.js");
+const connectToStores = require("alt-utils/lib/connectToStores");
 
 class ActionView extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      currentConfig: JSON.parse(
-        '{"components": [{  "componentType": "ImageComponent", "xsGridWidth": "12", "imagePath": "img/sick.png"}]}'
-      )
-    };
-    console.log("SessionStore.state.componentConfig", SessionStore.state.componentConfig);
     setTimeout(() => {
+      console.log("PROPS!!! this.props", this.props);
+    }, 1000);
+    this.state = {
+      currentConfig: this.props.componentConfig
+    };
+  }
 
-    console.log("SessionStore.state.componentConfig", SessionStore.state.componentConfig);
+  static getStores() {
+    return [SessionStore];
+  }
+
+  static getPropsFromStores() {
+    return {
+      user: SessionStore.getState().user,
+      configStore: SessionStore.getState().componentConfig
+    };
+  }
+
+  /*    console.log("SessionStore.state.componentConfig", SessionStore.state.componentConfig);
+    const config = SessionStore.state.componentConfig
+      ? SessionStore.state.componentConfig
+      : JSON.parse(
+          '{"components": [{  "componentType": "ImageComponent", "xsGridWidth": "12", "imagePath": "img/sick.png"}]}'
+        );
+    this.state = {
+      currentConfig: config
+    };
+    //    setTimeout(() => {
+
+    console.log(
+      "SessionStore.state.componentConfig",
+      SessionStore.state.componentConfig
+    );
+    /*
       if (SessionStore.state.user) {
         var configRef = firebase
           .database()
           .ref("configs/" + SessionStore.state.user.uid + "");
         configRef.on("value", snapshot => this.getCurrentConfig(snapshot));
       }
-    }, 1300);
-  }
+      */
+  // }, 1300);
+  //  }
 
   getCurrentConfig(snapshot) {
     if (snapshot.val()) {
@@ -53,27 +81,44 @@ class ActionView extends React.Component {
   }
 
   render() {
-    return (
-      <div>
-        <h1>Actions</h1>
-        <Grid
-          container
-          spacing={8}
-          justify="space-around"
-          className="actionsGridContainer"
-        >
-          {this.state.currentConfig.components.map(component => {
-            return this.createComponent(component);
-          })}
-        </Grid>
-      </div>
-    );
+    if (
+      this.props.configStore &&
+      this.props.configStore.componentConfig &&
+      this.props.configStore.componentConfig.components
+    ) {
+      return (
+        <div>
+          <h1>Actions</h1>
+          <Grid
+            container
+            spacing={8}
+            justify="space-around"
+            className="actionsGridContainer"
+          >
+            {this.props.configStore.componentConfig.components.map(
+              component => {
+                return this.createComponent(component);
+              }
+            )}
+          </Grid>
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <h1>Loading Actions...</h1>
+        </div>
+      );
+    }
   }
 }
 
 ActionView.propTypes = {
   ioMgr: PropTypes.object.isRequired
+  //  componentConfig: PropTypes.object.isRequired,
 };
+
+module.exports = connectToStores(ActionView);
 
 /*
 
@@ -152,5 +197,3 @@ ActionView.propTypes = {
     ];
 
 */
-
-module.exports = ActionView;

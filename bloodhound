@@ -31,7 +31,8 @@ case "$1" in
 		exit 0
 		;;
 	"deploy"|"derploy")
-		browserify app.js -t babelify -o bundle.js
+		browserify app.js -t babelify -o bundle_uncompressed.js
+    uglifyjs --compress --mangle --output bundle.js -- bundle_uncompressed.js
 		firebase deploy
 		exit 0
 		;;
