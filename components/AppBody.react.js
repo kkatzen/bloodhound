@@ -5,6 +5,7 @@ const LogView = require('./LogView.react.js');
 const connectToStores = require('alt-utils/lib/connectToStores');
 const AppViewStore = require('../alt/stores/AppViewStore.js');
 const {AppView} = require('../alt/actions/AppViewActions.js');
+const DataView = require('./DataView.react.js');
 const PeriodView = require('./PeriodView.react.js');
 const Settings = require('./SettingsView.react.js');
 const SessionStore = require("../alt/stores/SessionStore.js");
@@ -43,6 +44,9 @@ class AppBody extends React.Component {
         break;
       case AppView.SETTINGS:
         content = (<Settings ioMgr={this.props.ioMgr} />);
+        break;
+      case AppView.DATA:
+        content = (<DataView />);
         break;
     }
     const login = (<div id="signout">
