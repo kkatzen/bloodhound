@@ -30,10 +30,11 @@ class IOMgr {
   }
 
   writeEvent(event) {
-    console.log("IOMgr writeEvent");
-    console.log(event);
     const timestamp = new Date().getTime();
+    this.storeEvent(timestamp, event)
+  }
 
+  storeEvent(timestamp, event) {
     // TODO: Maybe don't dispatch this locally.
     // Listen to DB changes and update UI when change is commited.
     EventActions.addEvent(timestamp, event);

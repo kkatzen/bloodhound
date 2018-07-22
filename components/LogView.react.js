@@ -38,8 +38,9 @@ class LogView extends React.Component {
     const time = dateToStringWithoutSeconds(timestamp * 1);
     const description = LogView.getEventText(eventData);
     const deleteButton = this.getEventDeleteButton(timestamp);
+    const editButton = this.getEventEditButton(timestamp, eventData);
     const image = eventData["dataURL"];
-    let event = { id, time, description, deleteButton };
+    let event = { id, time, description, deleteButton, editButton };
     if (eventData.dataURL) {
       event.image = eventData.dataURL;
     }
@@ -48,51 +49,53 @@ class LogView extends React.Component {
 
   getEventDeleteButton(timestamp) {
     return (
-      <IconButton aria-label="Delete" onClick={() => this.props.ioMgr.deleteEvent(timestamp)}>
+      <IconButton
+        aria-label="Delete"
+        onClick={() => this.props.ioMgr.deleteEvent(timestamp)}
+      >
         <DeleteIcon />
       </IconButton>
     );
   }
 
-  /*
-  getEditEventButton(timestamp) {
-        if (
-          eventType == "hunger" ||
-          eventType == "medicine" ||
-          eventType == "food" ||
-          eventType == "feeling"
-        ) {
-          var btn = document.createElement("input");
-          btn.type = "button";
-          btn.value = "e";
-          btn.onclick = function(event) {
-            if (eventType == "hunger") {
-              eventData["hunger"] = prompt("what hunger level?");
-            } else if (eventType == "medicine") {
-              eventData["medicine"] = prompt("what medicine level?");
-            } else if (eventType == "food") {
-              eventData["food"]["description"] = prompt("what food?");
-            } else if (eventType == "feeling") {
-              eventData["feeling"]["level"] = prompt("what feeling level?");
-              eventData["feeling"]["description"] = prompt("what description?");
-            }
-            firebase
-              .database()
-              .ref("events/" + this.user.uid + "/" + timestamp)
-              .set(eventData);
-          };
-          rowEl.insertCell().appendChild(btn);
-        }
-};
-*/
-  
-  static getEventText(eventData) {
-    console.log("eventData",eventData);
+  getEventEditButton(timestamp, eventData) {
+    if (eventData.description || eventData.level) {
+      return (
+        <IconButton
+          aria-label="Edit"
+          onClick={() => this.processEdit(timestamp, eventData)}
+        >
+          <EditIcon />
+        </IconButton>
+      );
+    } else {
+      return (
+        <IconButton aria-label="Edit" disabled>
+          <EditIcon />
+        </IconButton>
+      );
+    }
+  }
 
-    let newFormat = eventData.type  ? true : false;
+  processEdit(timestamp, eventData) {
+    console.log(eventData);
+    if (eventData.description) {
+      eventData.description = prompt("description", eventData.description);
+    }
+    if (eventData.level) {
+      eventData.level = prompt("level", eventData.level);
+    }
+    console.log("newEvent", eventData);
+    this.props.ioMgr.storeEvent(timestamp, eventData);
+  }
+
+  static getEventText(eventData) {
+    console.log("eventData", eventData);
+
+    let newFormat = eventData.type ? true : false;
     let eventType = newFormat ? eventData.type : Object.keys(eventData)[0];
     let eventBody = newFormat ? eventData : eventData[eventType];
-    console.log("eventBody",eventBody);
+    console.log("eventBody", eventBody);
 
     switch (eventType) {
       case "hunger":
@@ -154,7 +157,11 @@ class LogView extends React.Component {
               return (
                 <TableRow key={n.id}>
                   <TableCell>{n.time}</TableCell>
-                  <TableCell>{n.description}{n.image && <img height="150px" src={n.image} />}</TableCell>
+                  <TableCell>
+                    {n.description}
+                    {n.image && <img height="150px" src={n.image} />}
+                  </TableCell>
+                  <TableCell>{n.editButton}</TableCell>
                   <TableCell>{n.deleteButton}</TableCell>
                 </TableRow>
               );
@@ -170,7 +177,7 @@ class LogView extends React.Component {
 LogView.propTypes = {
   events: PropTypes.object.isRequired,
   user: PropTypes.object,
-  ioMgr: PropTypes.object.isRequired,
+  ioMgr: PropTypes.object.isRequired
 };
 
 module.exports = connectToStores(LogView);

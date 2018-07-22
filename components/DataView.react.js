@@ -9,14 +9,10 @@ class DataView extends React.Component {
   }
 
   render() {
-
-    return (
-    <h1>Data View {SessionStore.state.user.displayName}</h1>
-    );
+    return <h1>Data View {SessionStore.state.user.displayName}</h1>;
   }
 }
 
-DataView.propTypes = {
-};
+DataView.propTypes = {};
 
 module.exports = DataView;
