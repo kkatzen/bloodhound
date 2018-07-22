@@ -81,34 +81,44 @@ class ActionView extends React.Component {
   }
 
   render() {
-    if (
-      this.props.configStore &&
-      this.props.configStore.componentConfig &&
-      this.props.configStore.componentConfig.components
-    ) {
+    console.log("render time!", this.props.configStore);
+
+    if (!this.props.user) {
       return (
         <div>
-          <h1>Actions</h1>
-          <Grid
-            container
-            spacing={8}
-            justify="space-around"
-            className="actionsGridContainer"
-          >
-            {this.props.configStore.componentConfig.components.map(
-              component => {
-                return this.createComponent(component);
-              }
-            )}
-          </Grid>
+          <h1>User not found</h1>
         </div>
       );
     } else {
-      return (
-        <div>
-          <h1>Loading Actions...</h1>
-        </div>
-      );
+      if (
+        !this.props.configStore ||
+        !this.props.configStore.componentConfig ||
+        !this.props.configStore.componentConfig.components
+      ) {
+        return (
+          <div>
+            <h1>Actions not found</h1>
+          </div>
+        );
+      } else {
+        return (
+          <div>
+            <h1>Actions</h1>
+            <Grid
+              container
+              spacing={8}
+              justify="space-around"
+              className="actionsGridContainer"
+            >
+              {this.props.configStore.componentConfig.components.map(
+                component => {
+                  return this.createComponent(component);
+                }
+              )}
+            </Grid>
+          </div>
+        );
+      }
     }
   }
 }
