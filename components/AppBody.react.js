@@ -48,7 +48,6 @@ class AppBody extends React.Component {
     const login = (<div id="signout">
         {SessionStore.state.user ? <div>{SessionStore.state.user.email}<Button onClick={()=> api.actions.signOut()}>Sign out</Button></div> : <Button onClick={()=> api.actions.logIn()}>Login</Button>}
         </div>);
-
     return (<div>{login}{content}</div>);
   }
 }

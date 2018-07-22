@@ -9,6 +9,7 @@
     <meta name="mobile-web-app-capable" content="yes">
     <!-- Tell iOS it's a PWA -->
     <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="manifest" href="/manifest.json">
 
     <title>Bloodhound Tracker</title>
     <style type="text/css">
@@ -32,15 +33,14 @@
         font-weight: bold;
       }
     </style>
-    <link rel="stylesheet" type="text/css" href="reset.css?v=1.7" media="all">
-    <link rel="stylesheet" type="text/css" href="style.css?v=1.9.16" media="all">
-<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
-  <link rel="apple-touch-icon" href="img/apple-touch-icon.jpg"/>
+    <link rel="stylesheet" type="text/css" href="reset.css" media="all">
+    <link rel="stylesheet" type="text/css" href="style.css" media="all">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
+    <link rel="apple-touch-icon" href="img/apple-touch-icon.jpg"/>
   </head>
   <body>
-  <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase.js"></script>
+  <script src="firebase503.js"></script>
   <script src="authConfig.js"></script>
   <script>
     firebase.initializeApp(authConfig);
