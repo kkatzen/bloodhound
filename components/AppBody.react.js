@@ -56,8 +56,13 @@ class AppBody extends React.Component {
   }
 }
 
+/* Object.values is not a function in some browsers so mapping the dictionary to a list */
+var appViewsList = Object.keys(AppView).map(function(key) {
+    return AppView[key];
+});
+
 AppBody.propTypes = {
-  currentView: PropTypes.oneOf(Object.values(AppView)).isRequired,
+  currentView: PropTypes.oneOf(appViewsList).isRequired,
   ioMgr: PropTypes.object.isRequired,
 };
 

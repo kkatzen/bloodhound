@@ -39,10 +39,9 @@ class LogView extends React.Component {
     const description = LogView.getEventText(eventData);
     const deleteButton = this.getEventDeleteButton(timestamp);
     const editButton = this.getEventEditButton(timestamp, eventData);
-    const image = eventData["dataURL"];
     let event = { id, time, description, deleteButton, editButton };
-    if (eventData.dataURL) {
-      event.image = eventData.dataURL;
+    if (eventData.imageRefId) {
+      event.imageRefId = eventData.imageRefId;
     }
     return event;
   }
@@ -159,7 +158,7 @@ class LogView extends React.Component {
                   <TableCell>{n.time}</TableCell>
                   <TableCell>
                     {n.description}
-                    {n.image && <img height="150px" src={n.image} />}
+                    {n.imageRefId}
                   </TableCell>
                   <TableCell>{n.editButton}</TableCell>
                   <TableCell>{n.deleteButton}</TableCell>
