@@ -43,7 +43,7 @@ button:active {
   padding: 5px;
 }
 
-#photoEvent {
+.photoEvent {
   width: 200px;
 }
 

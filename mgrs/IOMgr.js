@@ -2,6 +2,7 @@ const connectToStores = require("alt-utils/lib/connectToStores");
 const SessionStore = require("../alt/stores/SessionStore.js");
 const SessionActions = require("../alt/actions/SessionActions.js");
 const EventActions = require("../alt/actions/EventActions.js");
+const ImageActions = require("../alt/actions/ImageActions.js");
 
 /**
  * Class that knows how to interact with the store for the logged-in user.
@@ -32,6 +33,17 @@ class IOMgr {
   writeEvent(event) {
     const timestamp = new Date().getTime();
     this.storeEvent(timestamp, event);
+  }
+
+  getImage(imgRefId) {
+    console.log('getImage');
+    console.log(imgRefId);
+    const uid = this._getUser().uid;
+    const myImagRef = firebase
+      .database()
+      .ref("images/" + uid + "/" + imgRefId)
+      .once("value")
+      .then(imageDataUrl =>  ImageActions.addImage(imgRefId, imageDataUrl.val()));
   }
 
   storeEvent(timestamp, event) {
