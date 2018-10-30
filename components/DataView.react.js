@@ -9,10 +9,15 @@ class DataView extends React.Component {
   }
 
   render() {
+
+    this.props.ioMgr.dataViewTest();
+
     return <h1>Data View {SessionStore.state.user.displayName}</h1>;
   }
 }
 
-DataView.propTypes = {};
+DataView.propTypes = {
+  ioMgr: PropTypes.object.isRequired
+};
 
 module.exports = DataView;

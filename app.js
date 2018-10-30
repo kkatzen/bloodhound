@@ -11,7 +11,6 @@ const ioMgr = new IOMgr;
 
 window.onload = function() {
   ReactDOM.render(<AppBody ioMgr={ioMgr} />, document.getElementById('actionView'));
-  ReactDOM.render(<BloodhoundNavDrawer />, document.getElementById('drawer'));
 }
 
 /**

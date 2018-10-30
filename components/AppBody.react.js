@@ -8,9 +8,15 @@ const {AppView} = require('../alt/actions/AppViewActions.js');
 const DataView = require('./DataView.react.js');
 const PeriodView = require('./PeriodView.react.js');
 const Settings = require('./SettingsView.react.js');
+const BloodhoundNavDrawer = require('./BloodhoundNavDrawer.react.js');
 const SessionStore = require("../alt/stores/SessionStore.js");
 import Button from "@material-ui/core/Button";
 import Icon from "@material-ui/core/Icon";
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
 
 class AppBody extends React.Component {
   constructor(props) {
@@ -46,13 +52,23 @@ class AppBody extends React.Component {
         content = (<Settings ioMgr={this.props.ioMgr} />);
         break;
       case AppView.DATA:
-        content = (<DataView />);
+        content = (<DataView ioMgr={this.props.ioMgr} />);
         break;
     }
     const login = (<div id="signout">
-        {SessionStore.state.user ? <div>{SessionStore.state.user.email}<Button onClick={()=> api.actions.signOut()}>Sign out</Button></div> : <Button onClick={()=> api.actions.logIn()}>Login</Button>}
+        {SessionStore.state.user ? 
+          <div>{SessionStore.state.user.email}
+          <Button onClick={()=> api.actions.signOut()}>Sign out</Button></div> : 
+          <Button onClick={()=> api.actions.logIn()}>Login</Button>}
         </div>);
-    return (<div>{login}{content}</div>);
+    const appbar = (
+      <AppBar position="static" id="appbar">
+          <Toolbar>
+            <BloodhoundNavDrawer />
+              {login}
+          </Toolbar>
+          </AppBar>);
+    return (<div>{appbar}{content}</div>);
   }
 }
 

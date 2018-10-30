@@ -9,6 +9,7 @@ const TextButton = require("../components/TextButton.react.js");
 import Grid from "@material-ui/core/Grid";
 const SessionStore = require("../alt/stores/SessionStore.js");
 const connectToStores = require("alt-utils/lib/connectToStores");
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 class ActionView extends React.Component {
   constructor(props) {
@@ -30,40 +31,6 @@ class ActionView extends React.Component {
       user: SessionStore.getState().user,
       configStore: SessionStore.getState().componentConfig
     };
-  }
-
-  /*    console.log("SessionStore.state.componentConfig", SessionStore.state.componentConfig);
-    const config = SessionStore.state.componentConfig
-      ? SessionStore.state.componentConfig
-      : JSON.parse(
-          '{"components": [{  "componentType": "ImageComponent", "xsGridWidth": "12", "imagePath": "img/sick.png"}]}'
-        );
-    this.state = {
-      currentConfig: config
-    };
-    //    setTimeout(() => {
-
-    console.log(
-      "SessionStore.state.componentConfig",
-      SessionStore.state.componentConfig
-    );
-    /*
-      if (SessionStore.state.user) {
-        var configRef = firebase
-          .database()
-          .ref("configs/" + SessionStore.state.user.uid + "");
-        configRef.on("value", snapshot => this.getCurrentConfig(snapshot));
-      }
-      */
-  // }, 1300);
-  //  }
-
-  getCurrentConfig(snapshot) {
-    if (snapshot.val()) {
-      // User has never set config
-      this.setState({ currentConfig: JSON.parse(snapshot.val()) });
-      console.log("SET this.state.currentConfig", this.state.currentConfig);
-    }
   }
 
   createComponent(config) {
@@ -98,6 +65,7 @@ class ActionView extends React.Component {
         return (
           <div>
             <h1>Actions not found</h1>
+            <CircularProgress thickness={3} size={40} />
           </div>
         );
       } else {
@@ -125,85 +93,6 @@ class ActionView extends React.Component {
 
 ActionView.propTypes = {
   ioMgr: PropTypes.object.isRequired
-  //  componentConfig: PropTypes.object.isRequired,
 };
 
 module.exports = connectToStores(ActionView);
-
-/*
-
-    const components = [
-      {
-        componentType: "ScaleButtons",
-        type: "hunger",
-        min: "1",
-        max: "5",
-        xsGridWidth: 12
-      },
-      {
-        componentType: "CirclePuppy",
-        descriptionPrompt: true,
-        type: "food",
-        imagePath: "img/hunger.png",
-        xsGridWidth: 4
-      },
-      {
-        componentType: "CirclePuppy",
-        imagePath: "img/water.png",
-        xsGridWidth: 4,
-        type: "water"
-      },
-      {
-        componentType: "CirclePuppy",
-        imagePath: "img/sleep.png",
-        xsGridWidth: 4,
-        type: "sleep"
-      },
-      {
-        componentType: "TakePhoto",
-        xsGridWidth: 12
-      },
-      {
-        componentType: "TextButton",
-        xsGridWidth: 3,
-        text: "Earl Tea",
-        description: "Earl Grey Tea Soy creamer",
-        type: "food"
-      },
-      {
-        componentType: "ImageComponent",
-        xsGridWidth: 12,
-        imagePath: "img/sick.png"
-      },
-      {
-        componentType: "TextButton",
-        xsGridWidth: 4,
-        text: "Sumatriptan",
-        description: "Sumatriptan",
-        type: "medicine"
-      },
-      {
-        componentType: "TextButton",
-        xsGridWidth: 4,
-        text: "Ibuprofen",
-        description: "Ibuprofen",
-        type: "medicine"
-      },
-      {
-        componentType: "TextButton",
-        xsGridWidth: 4,
-        text: "Acetamenophin",
-        description: "Acetamenophin",
-        type: "medicine"
-      },
-      {
-        componentType: "ScaleButtons",
-        type: "feeling",
-        min: "1",
-        max: "5",
-        xsGridWidth: 12,
-        descriptionPrompt: true
-      }
-    ];
-
-*/

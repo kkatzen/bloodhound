@@ -15,6 +15,17 @@ class IOMgr {
     SessionStore.listen(state => this._onChange());
   }
 
+dataViewTest() {
+
+  console.log("making ref..");
+    var ref = firebase.database().ref("events/" + this._getUser().uid);
+    console.log("ref", ref);
+    ref.orderByChild("type").equalTo("feeling").once("value", function(snapshot) {
+      console.log(snapshot.val());
+      console.log(snapshot.key + " was " + snapshot.val().type + " type");
+    });
+  }
+
   loadMore() {
     const uid = this._getUser().uid;
     const limit = prompt("How many to load?");
@@ -50,11 +61,6 @@ class IOMgr {
     const user = this._getUser();
     console.log("STORING EVENT FOR: " + user.email);
 
-
-console.log('event');
-console.log(event);
-console.log(Object.keys(event).includes("dataURL"));
-console.log(Object.keys(event));
     if (Object.keys(event).includes("dataURL")) {
       console.log("EVENT DATA HAS DATAURL")
       // Generate a reference to a new location and add some data using push()
