@@ -76,32 +76,20 @@ class LoggedEventView extends React.Component {
     let eventType = newFormat ? eventData.type : Object.keys(eventData)[0];
     let eventBody = newFormat ? eventData : eventData[eventType];
 
-    switch (eventType) {
-      case "hunger":
-        let hungerValue = newFormat ? eventBody.level : eventBody;
-        return "Hunger level " + hungerValue;
-      case "water":
-        return "Drank a cup of water";
-      case "medicine":
-        let medicineValue = newFormat ? eventBody.description : eventBody;
-        return "Took " + medicineValue;
-      case "sleep":
-        return "Went to bed / Woke up";
-      case "food":
-        var text = "Ate " + eventBody.description;
-        if (eventBody["photo"]) {
-          text += " " + eventBody["photo"];
-        }
-        return text;
-      case "feeling":
-        var text = "Feeling bad " + eventBody.level;
-        if (eventBody["description"]) {
-          text += ' "' + eventBody["description"] + '"';
-        }
-        return text;
-      default:
-        return "";
+    var text = "";
+    if (eventType != "image"){
+      text += eventType + ":";
     }
+    if (eventBody.level){
+      text += " level:" + eventBody.level;
+    }
+     if(eventBody["description"]) {
+      text += " " + eventBody["description"];
+    }
+    if (eventBody["photo"]) {
+      text += " " + eventBody["photo"];
+    }
+    return text;
   }
 
   render() {
