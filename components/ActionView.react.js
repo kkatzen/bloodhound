@@ -54,6 +54,7 @@ class ActionView extends React.Component {
       return (
         <div>
           <h1>User not found</h1>
+            <CircularProgress thickness={3} size={40} />
         </div>
       );
     } else {
@@ -71,7 +72,6 @@ class ActionView extends React.Component {
       } else {
         return (
           <div>
-            <h1>Actions</h1>
             <Grid
               container
               spacing={8}

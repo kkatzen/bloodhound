@@ -40,6 +40,9 @@ class ScaleButtons extends React.Component {
     return (
       <Grid item xs={this.props.config.xsGridWidth} sm={this.props.config.xsGridWidth}
                  className="scaleButtonGridItem">
+           <div class="scaleButtonBgName">
+           {this.props.config.type}
+          </div>
       {buttons}
     </Grid>)
     ;

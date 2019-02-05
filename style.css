@@ -1,6 +1,7 @@
 body {
   background-color: #A8CEC7;
   color: black;
+  font-family: sans-serif;
 }
 
 button {
@@ -50,6 +51,10 @@ button:active {
   max-width: 220px;
   word-wrap: break-word;
   padding: 5px;
+}
+
+.periodPaper {
+  max-width: 350px;
 }
 
 .photoEvent {
@@ -121,14 +126,27 @@ button:active {
   height: 100%;
 }
 
+.scaleButtonBgName {
+  position: absolute;
+  background: #ecf0ef !important;
+  width: 100%;
+  height: 56px;
+  font-size: 40px;
+  line-height: 56px;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: #d9dddc;
+}
 
 /*
   Actions Grid Styling
 */
 
 .actionsGridContainer div {
+/*
   background: white;
   margin-top: 10px;
+  */
 }
 
 /*
