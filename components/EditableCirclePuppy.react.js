@@ -68,9 +68,6 @@ class EditableCirclePuppy extends React.Component {
     this.state.modifingConfig.descriptionPrompt = event.target.checked;
   }
 
-  handleClickOpen = () => {
-    this.setState({open: true});
-  };
 
   deleteComponent() {
     console.log("deleteComponent");
