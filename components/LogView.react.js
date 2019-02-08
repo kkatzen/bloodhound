@@ -47,7 +47,7 @@ class LogView extends React.Component {
         <Table>
           <TableBody>
             {tableRows.map(timestamp => {
-              return (<LoggedEventView ioMgr={this.props.ioMgr} timestamp={timestamp} event={events[timestamp]} />
+              return (<LoggedEventView key={timestamp} ioMgr={this.props.ioMgr} timestamp={timestamp} event={events[timestamp]} />
               );
             })}
           </TableBody>

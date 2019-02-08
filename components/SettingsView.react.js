@@ -2,30 +2,45 @@ const React = require("react");
 const PropTypes = require("prop-types");
 const TakePhoto = require("../components/TakePhoto.react.js");
 const CirclePuppy = require("../components/CirclePuppy.react.js");
+const EditableCirclePuppy = require("../components/EditableCirclePuppy.react.js");
 const TextButton = require("../components/TextButton.react.js");
 const ScaleButtons = require("../components/ScaleButtons.react.js");
+const ImageComponent = require("../components/ImageComponent.react.js");
 import Grid from "@material-ui/core/Grid";
 const SessionStore = require("../alt/stores/SessionStore.js");
+import CircularProgress from "@material-ui/core/CircularProgress";
+const connectToStores = require("alt-utils/lib/connectToStores");
 
 class SettingsView extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {value: ''};
+    this.state = { value: "" };
     setTimeout(() => {
       var configRef = firebase
         .database()
         .ref("configs/" + SessionStore.state.user.uid + "");
-    configRef.on("value", snapshot => this.getCurrentConfig(snapshot));
+      configRef.on("value", snapshot => this.getCurrentConfig(snapshot));
     }, 1000);
   }
 
+  static getStores() {
+    return [SessionStore];
+  }
+
+  static getPropsFromStores() {
+    return {
+      user: SessionStore.getState().user,
+      configStore: SessionStore.getState().componentConfig
+    };
+  }
+
   getCurrentConfig(snapshot) {
-    this.setState({value: snapshot.val()});
+    this.setState({ value: snapshot.val() });
   }
 
   handleChange(event) {
     console.log("handleChange", event);
-    this.setState({value: event.target.value});
+    this.setState({ value: event.target.value });
   }
 
   handleSubmit(event) {
@@ -33,17 +48,64 @@ class SettingsView extends React.Component {
     this.props.ioMgr.setComponentConfig(this.state.value);
   }
 
+  createComponent(config, index) {
+    if (!config) {
+      return "";
+    }
+    config["index"] = index;
+    if (config.componentType == "CirclePuppy") {
+      return <EditableCirclePuppy config={config} ioMgr={this.props.ioMgr} />;
+    } else if (config.componentType == "ScaleButtons") {
+      return <ScaleButtons config={config} ioMgr={this.props.ioMgr} />;
+    } else if (config.componentType == "TakePhoto") {
+      return <TakePhoto config={config} ioMgr={this.props.ioMgr} />;
+    } else if (config.componentType == "ImageComponent") {
+      return <ImageComponent config={config} />;
+    } else {
+      return <TextButton config={config} ioMgr={this.props.ioMgr} />;
+    }
+  }
+
   render() {
-
-    return (
-    <form onSubmit={this.handleSubmit.bind(this)}>
-        <label>
-        <textarea name="textarea" value={this.state.value} onChange={this.handleChange.bind(this)}></textarea>
-        </label>
-        <input type="submit" value="Submit" />
-      </form>
-
-    );
+    console.log("SettingsView render time!", this.props.configStore);
+      if (
+        !this.props.configStore ||
+        !this.props.configStore.componentConfig ||
+        !this.props.configStore.componentConfig.components
+      ) {
+        return (
+          <div>
+            <h1>loooaddddingg....</h1>
+            <CircularProgress thickness={3} size={40} />
+          </div>
+        );
+      } else {
+        return (
+           <div>
+          <Grid
+            container
+            spacing={8}
+            justify="space-around"
+            className="actionsGridContainer">
+            {this.props.configStore.componentConfig.components.map(
+              (component, index) => {
+                return this.createComponent(component, index);
+              }
+            )}
+          </Grid>
+          <form onSubmit={this.handleSubmit.bind(this)}>
+            <label>
+              <textarea
+                name="textarea"
+                value={this.state.value}
+                onChange={this.handleChange.bind(this)}
+              />
+            </label>
+            <input type="submit" value="Submit" />
+          </form>
+        </div>
+        );
+      }
   }
 }
 
@@ -51,9 +113,9 @@ SettingsView.propTypes = {
   ioMgr: PropTypes.object.isRequired
 };
 
-module.exports = SettingsView;
+module.exports = connectToStores(SettingsView);
 
-  /*
+/*
 
 
 {index: {EventComonent}}
@@ -81,7 +143,6 @@ gridWidth: <>
 }
 
 */
-
 
 /*
 {"components": [ {

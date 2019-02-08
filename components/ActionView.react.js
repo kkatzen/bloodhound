@@ -14,9 +14,6 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 class ActionView extends React.Component {
   constructor(props) {
     super(props);
-    setTimeout(() => {
-      console.log("PROPS!!! this.props", this.props);
-    }, 1000);
     this.state = {
       currentConfig: this.props.componentConfig
     };
@@ -34,6 +31,9 @@ class ActionView extends React.Component {
   }
 
   createComponent(config) {
+    if (!config) {
+      return "";
+    }
     if (config.componentType == "CirclePuppy") {
       return <CirclePuppy config={config} ioMgr={this.props.ioMgr} />;
     } else if (config.componentType == "ScaleButtons") {
@@ -48,7 +48,7 @@ class ActionView extends React.Component {
   }
 
   render() {
-    console.log("render time!", this.props.configStore);
+    console.log("ActionView render time!", this.props.configStore);
 
     if (!this.props.user) {
       return (
@@ -70,6 +70,7 @@ class ActionView extends React.Component {
           </div>
         );
       } else {
+        console.log(this.props.configStore.componentConfig);
         return (
           <div>
             <Grid

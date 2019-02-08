@@ -158,6 +158,10 @@ button:active {
   background: transparent !important;
 }
 
+.editableCirclePuppyGridItem {
+  border: 1px solid red;
+}
+
 .circlePuppyGridItem button {
   background: transparent;
   border: 0;
